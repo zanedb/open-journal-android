@@ -8,6 +8,7 @@ The simple notes platform you know and love, on Android! A version of [this note
 - [ ] Powerful Encryption
 - [ ] Password/PIN/Fingerprint Note Locking
 - [ ] Notes Synchronization between Platforms
+- [ ] Sharing Notes between Users/P2P Notetaking
 ## Beta APKs
 Grab the latest beta APKs [here](https://github.com/zanedb/open-journal-android/releases).
 ## Screenshots
