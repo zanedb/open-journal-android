@@ -5,9 +5,9 @@ The simple notes platform you know and love, on Android! A version of [this note
 ## To Do/Planned Features (for both versions)
 - [ ] Basic UI based on [the original](https://github.com/openssf/open-journal)
 - [ ] A simple notes system
-- [ ] Notes Synchronization between Platforms
 - [ ] Powerful Encryption
 - [ ] Password/PIN/Fingerprint Note Locking
+- [ ] Notes Synchronization between Platforms
 ## Beta APKs
 Grab the latest beta APKs [here](https://github.com/zanedb/open-journal-android/releases).
 ## Screenshots
