@@ -28,6 +28,7 @@ android:
     #- addon-google_apis-google-19
     #- pub.devrel:easypermissions:0.4.0
     #- it.sephiroth.android.exif:library:+
+    - com.android.support:design:25.3.1
 
     # Specified at least one system image,
     # if you need to run emulator(s) during your tests
