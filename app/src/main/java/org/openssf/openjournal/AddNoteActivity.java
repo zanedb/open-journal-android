@@ -22,11 +22,11 @@ public class AddNoteActivity extends AppCompatActivity {
         // Set Toolbar to app ActionBar
         setSupportActionBar(toolbar);
         // Set navigation icon to back button
-        //if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
             toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back_black_24dp));
-        //} else {
+        } else {
             toolbar.setNavigationIcon(getDrawable(R.drawable.ic_arrow_back_black_24dp));
-        //}
+        }
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
