@@ -14,7 +14,8 @@
     <string name="app_name">Open Journal</string>
 
     <!-- AddNoteActivity Layout Strings -->
-    <string name="note_hint">Start typing..</string>
+    <string name="note_title_hint">Title</string>
+    <string name="note_hint">Write your note here..</string>
     <string name="done_button">Done</string>
 
     <!-- AddNoteActivity Java Strings -->

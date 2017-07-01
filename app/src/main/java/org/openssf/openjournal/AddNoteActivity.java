@@ -66,7 +66,8 @@ public class AddNoteActivity extends AppCompatActivity {
 
     private void handleBackInput() {
         EditText note = (EditText) findViewById(R.id.note_edittext);
-        if(note.getText().toString().equals("")) {
+        EditText note_title = (EditText) findViewById(R.id.note_title_edittext);
+        if(note.getText().toString().equals("") && note_title.getText().toString().equals("")) {
             // Send message informing user note is being discarded
             Toast.makeText(AddNoteActivity.this, getString(R.string.discarding), Toast.LENGTH_SHORT).show();
             // Exit activity

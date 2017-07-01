@@ -22,12 +22,24 @@
         </android.support.v7.widget.Toolbar>
 
         <EditText
+            android:id="@+id/note_title_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textShortMessage"
+            android:hint="@string/note_title_hint"
+            android:padding="16dp"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:background="@android:color/transparent"/>
+
+        <EditText
             android:id="@+id/note_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
             android:hint="@string/note_hint"
-            android:padding="16dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
             android:background="@android:color/transparent"/>
     </LinearLayout>
 
