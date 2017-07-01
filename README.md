@@ -12,4 +12,7 @@ The simple notes platform you know and love, on Android! A version of [this note
 ## Beta APKs
 Grab the latest beta APKs [here](https://github.com/zanedb/open-journal-android/releases).
 ## Screenshots
-None yet, will add later
+Below are some basic screenshots of the UI. No note-saving functionality has been added yet.
+- [v0.1-beta-screenshot1.png](https://www.dropbox.com/s/lks9lfw6e4ugx1f/v0.1-beta-screenshot1.png?dl=1)
+- [v0.1-beta-screenshot2.png](https://www.dropbox.com/s/gp7sc39dkcodayb/v0.1-beta-screenshot2.png?dl=1)
+- [v0.1-beta-screenshot3.png](https://www.dropbox.com/s/evu7kcgyutg92z8/v0.1-beta-screenshot3.png?dl=1)
