@@ -27,6 +27,7 @@ public class AddNoteActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp(){
         // Handle back button in toolbar button press
         handleBackInput();
+        // Return true because we performed back navigation
         return true;
     }
 
@@ -37,21 +38,27 @@ public class AddNoteActivity extends AppCompatActivity {
     }
 
     private void handleBackInput() {
-        AlertDialog.Builder builder;
-        builder = new AlertDialog.Builder(this);
-        builder.setTitle("Discard note?")
-                .setMessage("Are you sure you want to discard this note?")
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+        // Create & initialize new AlertDialog Builder
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        // Set dialog title, message
+        builder.setTitle(getString(R.string.discard_note))
+                .setMessage(getString(R.string.discard_note_confirm))
+                // Add "positive" button - discarding note
+                .setPositiveButton(getString(R.string.discard), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(AddNoteActivity.this, "Discarding note..", Toast.LENGTH_SHORT).show();
+                        // Send Toast message telling user the note is being discarded
+                        Toast.makeText(AddNoteActivity.this, getString(R.string.discarding), Toast.LENGTH_SHORT).show();
+                        // Exit Activity & return to HomeActivity
                         finish();
                     }
                 })
+                // Set "negative" button - not discarding note
                 .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // Do nothing, because the note should NOT be discarded
                     }
                 })
+                // Show dialog box
                 .show();
     }
 }

@@ -13,7 +13,13 @@
     <!-- App Strings -->
     <string name="app_name">Open Journal</string>
 
-    <!-- Layout Strings -->
+    <!-- AddNoteActivity Layout Strings -->
     <string name="note_hint">Start typing..</string>
     <string name="done_button">Done</string>
+
+    <!-- AddNoteActivity Java Strings -->
+    <string name="discard_note">Discard note</string>
+    <string name="discard_note_confirm">Are you sure you want to discard this note?</string>
+    <string name="discard">Discard</string>
+    <string name="discarding">Discarding note..</string>
 </resources>
