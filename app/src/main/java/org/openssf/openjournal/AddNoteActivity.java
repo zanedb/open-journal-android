@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 public class AddNoteActivity extends AppCompatActivity {
@@ -18,6 +19,8 @@ public class AddNoteActivity extends AppCompatActivity {
 
         // Initialize Toolbar from layout & add back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        // Change ActionBar title to Add Note
+        getSupportActionBar().setTitle(getString(R.string.add_note));
 
         Button done = (Button) findViewById(R.id.done_button);
         done.setOnClickListener(new View.OnClickListener() {
@@ -44,28 +47,36 @@ public class AddNoteActivity extends AppCompatActivity {
     }
 
     private void handleBackInput() {
-        // Create & initialize new AlertDialog Builder
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        // Set dialog title, message
-        builder.setTitle(getString(R.string.discard_note))
-                .setMessage(getString(R.string.discard_note_confirm))
-                // Add "positive" button - discarding note
-                .setPositiveButton(getString(R.string.discard), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Send Toast message telling user the note is being discarded
-                        Toast.makeText(AddNoteActivity.this, getString(R.string.discarding), Toast.LENGTH_SHORT).show();
-                        // Exit Activity & return to HomeActivity
-                        finish();
-                    }
-                })
-                // Set "negative" button - not discarding note
-                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Do nothing, because the note should NOT be discarded
-                    }
-                })
-                // Show dialog box
-                .show();
+        EditText note = (EditText) findViewById(R.id.note_edittext);
+        if(note.getText().toString().equals("")) {
+            // Send message informing user note is being discarded
+            Toast.makeText(AddNoteActivity.this, getString(R.string.discarding), Toast.LENGTH_SHORT).show();
+            // Exit activity
+            finish();
+        } else {
+            // Create & initialize new AlertDialog Builder
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            // Set dialog title, message
+            builder.setTitle(getString(R.string.discard_note))
+                    .setMessage(getString(R.string.discard_note_confirm))
+                    // Add "positive" button - discarding note
+                    .setPositiveButton(getString(R.string.discard), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Send Toast message telling user the note is being discarded
+                            Toast.makeText(AddNoteActivity.this, getString(R.string.discarding), Toast.LENGTH_SHORT).show();
+                            // Exit Activity & return to HomeActivity
+                            finish();
+                        }
+                    })
+                    // Set "negative" button - not discarding note
+                    .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Do nothing, because the note should NOT be discarded
+                        }
+                    })
+                    // Show dialog box
+                    .show();
+        }
     }
 
     private void saveNote() {
