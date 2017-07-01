@@ -9,15 +9,13 @@ public class Prefs {
     private final SharedPreferences.Editor editor;
     private final Context _context;
 
-    // Mode
-    private final int PRIVATE_MODE = 0;
-
     // File Name
     private static final String PREF_NAME = "app";
     private static final String IS_FIRST_TIME = "IsFirstTime";
 
     @SuppressLint("CommitPrefEdits") // Required as per function structure
     public Prefs(Context context) {
+        final int PRIVATE_MODE = 0;
         this._context = context;
         pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         editor = pref.edit();

@@ -1,14 +1,11 @@
 package org.openssf.openjournal;
 
 import android.content.DialogInterface;
-import android.os.Build;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 public class AddNoteActivity extends AppCompatActivity {
@@ -19,8 +16,17 @@ public class AddNoteActivity extends AppCompatActivity {
         // Set content view to activity_home layout
         setContentView(R.layout.activity_add_note);
 
-        // Initialize Toolbar from layout
+        // Initialize Toolbar from layout & add back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        Button done = (Button) findViewById(R.id.done_button);
+        done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // On Done button click, save note
+                saveNote();
+            }
+        });
     }
 
     @Override
@@ -60,5 +66,10 @@ public class AddNoteActivity extends AppCompatActivity {
                 })
                 // Show dialog box
                 .show();
+    }
+
+    private void saveNote() {
+        // TODO 1: Write code here to save the note
+        Toast.makeText(AddNoteActivity.this, getString(R.string.saving_note), Toast.LENGTH_SHORT).show();
     }
 }

@@ -22,4 +22,5 @@
     <string name="discard_note_confirm">Are you sure you want to discard this note?</string>
     <string name="discard">Discard</string>
     <string name="discarding">Discarding note..</string>
+    <string name="saving_note">Saving note..</string>
 </resources>
