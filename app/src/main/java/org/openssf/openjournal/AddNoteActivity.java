@@ -4,6 +4,9 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,19 +20,34 @@ public class AddNoteActivity extends AppCompatActivity {
         // Set content view to activity_home layout
         setContentView(R.layout.activity_add_note);
 
-        // Initialize Toolbar from layout & add back button
+        // Initialize Toolbar from layout
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_add_note);
+        // Set as Action Bar
+        setSupportActionBar(toolbar);
+        // Add back button to Toolbar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // Change ActionBar title to Add Note
         getSupportActionBar().setTitle(getString(R.string.add_note));
+    }
 
-        Button done = (Button) findViewById(R.id.done_button);
-        done.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // On Done button click, save note
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate menu items in ActionBar/add items to ActionBar
+        getMenuInflater().inflate(R.menu.menu_add_note_toolbar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle ClickEvents on ActionBar/Toolbar items
+        switch (item.getItemId()) {
+            // Checkmark ClickEvent for saving note
+            case R.id.done_checkmark:
                 saveNote();
-            }
-        });
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
