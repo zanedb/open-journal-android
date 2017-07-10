@@ -1,4 +1,4 @@
-# Open Journal Android
+# openJournal Android
 [![Build Status](https://travis-ci.com/zanedb/open-journal-android.svg?token=2seZBxqU82mg9skmxMZY&branch=master)](https://travis-ci.com/zanedb/open-journal-android)
 
 The simple notes platform you know and love, on Android! A version of [this notes platform](https://github.com/openssf/open-journal).
