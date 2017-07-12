@@ -13,6 +13,9 @@
     <!-- App Strings -->
     <string name="app_name">openJournal</string>
 
+    <!-- HomeActivity Java Strings -->
+    <string name="no_notes">Add a note to get started..</string>
+
     <!-- AddNoteActivity Layout Strings -->
     <string name="note_title_hint">Title</string>
     <string name="note_hint">Write your note here..</string>

@@ -7,11 +7,21 @@
     android:fitsSystemWindows="true"
     tools:context="org.openssf.openjournal.HomeActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:text="@string/no_notes"
+        android:id="@+id/no_notes_textview"
+        android:layout_gravity="center"/>
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/list_view_home_activity">
-        <!-- Content will be added dynamically based on notes. Nothing is needed here. -->
+        android:id="@+id/list_view_home_activity"
+        android:visibility="invisible">
+        <!-- Only visible if no notes, rest of the content will be added dynamically. Nothing else is needed here. -->
+
     </ListView>
 
     <android.support.design.widget.FloatingActionButton

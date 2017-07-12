@@ -119,6 +119,7 @@ public class AddNoteActivity extends AppCompatActivity {
             fos = openFileOutput(note_title.getText().toString()+"_openJournalNote", Context.MODE_PRIVATE);
             fos.write(note.getText().toString().getBytes());
             fos.close();
+            finish();
         } catch (FileNotFoundException e) {
             Toast.makeText(AddNoteActivity.this, getString(R.string.file_not_found_exception), Toast.LENGTH_SHORT).show();
         } catch (IOException e) {

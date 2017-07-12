@@ -5,8 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -17,14 +21,33 @@ import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
 
-    // Define LinearLayout from layout file for adding elements
-    LinearLayout ll = (LinearLayout) findViewById(R.id.linear_layout_activity_home);
+    // Define ListView
+    private ListView lv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Set content view to activity_home layout
         setContentView(R.layout.activity_home);
+
+        // Initialize ListView from XML
+        lv = (ListView) findViewById(R.id.list_view_home_activity);
+        // Create ArrayList for data
+        ArrayList<String> allNotes = getAllNotes(getApplicationContext());
+        // Check if empty ArrayList
+        if(allNotes.size() == 0) {
+            // If so, display text about it
+            TextView noNotes = (TextView) findViewById(R.id.no_notes_textview);
+            noNotes.setVisibility(View.VISIBLE);
+        } else {
+            // Otherwise, display list items
+            // Create new adapter with note titles
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, allNotes);
+            // Set ListView adapter
+            lv.setAdapter(adapter);
+            // Set ListView to visible
+            lv.setVisibility(View.VISIBLE);
+        }
 
         // Initialize FAB from layout for adding onClickListener
         FloatingActionButton addNote = (FloatingActionButton) findViewById(R.id.add_note_fab);
@@ -36,29 +59,23 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(addnoteintent);
             }
         });
-
-        // TODO 1: Implement properly using ListView (https://developer.android.com/guide/topics/ui/layout/listview.html)
-
-        // Define ArrayList to contain all note titles
-        ArrayList allNotes = getAllNotes(getApplicationContext());
-        // Go through each and add to layout
-        for(int i=0;allNotes.size()<i;i++) {
-            // Add elements here
-        }
     }
 
-    public ArrayList getAllNotes(Context context) {
+    public ArrayList<String> getAllNotes(Context context) {
         // Create ArrayList to store note titles in
         ArrayList notes = new ArrayList();
         // Create File array of filenames
         File[] filenames = this.getFilesDir().listFiles();
         // If the File's name is a note, then add it to the notes ArrayList
-        for(int i=0;filenames.length<i;i++) {
+        int fnLength = filenames.length;
+        for(int i=0;i<fnLength;i++) {
+            Log.d("REACHED_FOR_LOOP",filenames[i].getName());
             if(filenames[i].getName().endsWith("_openJournalNote")) {
                 // Add to ArrayList and remove _openJournalNote identifier from display
                 notes.add(filenames[i].getName().substring(0, filenames[i].getName().length() - 16));
             }
         }
+        Log.d("TESTING",notes.toString());
         // Return the notes ArrayList
         return notes;
     }
