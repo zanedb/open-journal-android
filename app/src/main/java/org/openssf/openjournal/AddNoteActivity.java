@@ -1,5 +1,6 @@
 package org.openssf.openjournal;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class AddNoteActivity extends AppCompatActivity {
 
@@ -99,7 +104,25 @@ public class AddNoteActivity extends AppCompatActivity {
     }
 
     private void saveNote() {
-        // TODO 1: Write code here to save the note
         Toast.makeText(AddNoteActivity.this, getString(R.string.saving_note), Toast.LENGTH_SHORT).show();
+
+        // Get value of note & title
+        EditText note = (EditText) findViewById(R.id.note_edittext);
+        EditText note_title = (EditText) findViewById(R.id.note_title_edittext);
+
+        // TODO 2: Sanitize strings to prevent backslashes, injection, etc.
+
+        // Create FileOutputStream for writing file
+        FileOutputStream fos;
+        try {
+            // Open FileOutputStream
+            fos = openFileOutput(note_title.getText().toString()+"_openJournalNote", Context.MODE_PRIVATE);
+            fos.write(note.getText().toString().getBytes());
+            fos.close();
+        } catch (FileNotFoundException e) {
+            Toast.makeText(AddNoteActivity.this, getString(R.string.file_not_found_exception), Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            Toast.makeText(AddNoteActivity.this, getString(R.string.ioexception), Toast.LENGTH_SHORT).show();
+        }
     }
 }

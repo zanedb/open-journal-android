@@ -25,4 +25,8 @@
     <string name="discard">Discard</string>
     <string name="discarding">Discarding note..</string>
     <string name="saving_note">Saving note..</string>
+
+    <!-- Error Strings -->
+    <string name="file_not_found_exception">The file could not be found</string>
+    <string name="ioexception">An unexpected error occurred</string>
 </resources>
