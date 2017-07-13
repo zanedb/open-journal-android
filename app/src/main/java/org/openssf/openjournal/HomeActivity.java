@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -23,6 +22,9 @@ public class HomeActivity extends AppCompatActivity {
 
     // Define ListView
     private ListView lv;
+
+    // Debugging boolean
+    boolean debugOn = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,13 +71,11 @@ public class HomeActivity extends AppCompatActivity {
         // If the File's name is a note, then add it to the notes ArrayList
         int fnLength = filenames.length;
         for(int i=0;i<fnLength;i++) {
-            Log.d("REACHED_FOR_LOOP",filenames[i].getName());
             if(filenames[i].getName().endsWith("_openJournalNote")) {
                 // Add to ArrayList and remove _openJournalNote identifier from display
                 notes.add(filenames[i].getName().substring(0, filenames[i].getName().length() - 16));
             }
         }
-        Log.d("TESTING",notes.toString());
         // Return the notes ArrayList
         return notes;
     }
@@ -111,4 +111,10 @@ public class HomeActivity extends AppCompatActivity {
         // Return string
         return noteText;
     }
+
+    /*public void debug(String tag, String msg) {
+        if(debugOn) {
+            Log.d(tag, msg);
+        }
+    }*/
 }
