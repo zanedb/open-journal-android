@@ -63,9 +63,7 @@ class NotesAdapter extends BaseAdapter {
 
         deleteNoteButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Note note = new Note();
-                note.nameOfNote = noteTitle;
-                note.context = requiredContext;
+                Note note = new Note(requiredContext,noteTitle);
                 note.delete();
             }
         });

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/delete_icon_existing_note_toolbar"
+        android:icon="@drawable/ic_delete_white_24dp"
+        app:showAsAction="ifRoom"
+        android:title="@string/delete_button">
+    </item>
+    <item
+        android:id="@+id/done_checkmark_existing_note"
+        android:icon="@drawable/ic_done_white_24dp"
+        app:showAsAction="always"
+        android:title="@string/done_button">
+    </item>
+</menu>

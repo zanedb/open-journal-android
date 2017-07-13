@@ -21,8 +21,13 @@ import java.io.InputStreamReader;
 
 class Note {
     // Variables
-    String nameOfNote;
-    Context context;
+    private String nameOfNote;
+    private Context context;
+
+    Note(Context contextTwo, String noteName) {
+        context = contextTwo;
+        nameOfNote = noteName;
+    }
 
     void delete() {
         // Locate file directory
@@ -66,7 +71,7 @@ class Note {
                 .show();
     }
 
-    public String readNote() {
+    String readNote() {
         // Set noteText to error code in case try/catch fails
         String noteText = context.getResources().getString(R.string.ioexception);
         try {

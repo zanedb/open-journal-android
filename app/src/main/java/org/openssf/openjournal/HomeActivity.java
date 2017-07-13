@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -41,6 +43,22 @@ public class HomeActivity extends AppCompatActivity {
             NotesAdapter adapter = new NotesAdapter(this, allNotes);
             // Set ListView adapter
             lv.setAdapter(adapter);
+            // Add onClickListener
+            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Log.d("ITEMCLICKED","Item clicked!! title: "+allNotes.get(position));
+                    // Get title of note
+                    String noteTitle = allNotes.get(position);
+                    // Create new intent for opening ExistingNoteActivity
+                    Intent existingNote = new Intent(getApplicationContext(), ExistingNoteActivity.class);
+                    // Pass note title to Activity
+                    existingNote.putExtra("note_title", noteTitle);
+                    // Start activity
+                    startActivity(existingNote);
+                }
+
+            });
             // Set ListView to visible
             lv.setVisibility(View.VISIBLE);
         }

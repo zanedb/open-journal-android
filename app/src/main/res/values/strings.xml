@@ -13,6 +13,9 @@
     <!-- App Strings -->
     <string name="app_name">openJournal</string>
 
+    <!-- Content Descriptions -->
+    <string name="cd_delete">A delete icon to delete the image</string>
+
     <!-- HomeActivity Java Strings -->
     <string name="no_notes">Add a note to get started..</string>
     <string name="delete_note">Delete note</string>
@@ -34,7 +37,16 @@
     <string name="discarding">Discarding note..</string>
     <string name="saving_note">Saving note..</string>
 
+    <!-- ExistingNoteActivity Layout Strings -->
+    <string name="delete_button">Delete permananently</string>
+
+    <!-- ExistingNoteActivity Java Strings -->
+    <string name="new_title_saved">New title saved</string>
+    <string name="discard_changes">Discard changes</string>
+    <string name="discard_changes_confirm">Are you sure you want to discard your changes to this note?</string>
+
     <!-- Error Strings -->
+    <string name="general_error">An unexpected error occurred</string>
     <string name="file_not_found_exception">The file could not be found</string>
     <string name="ioexception">An unexpected error occurred</string>
     <string name="file_already_exists">File already exists!</string>

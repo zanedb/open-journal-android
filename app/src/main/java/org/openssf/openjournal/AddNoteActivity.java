@@ -1,17 +1,13 @@
 package org.openssf.openjournal;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -25,7 +21,7 @@ public class AddNoteActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Set content view to activity_home layout
+        // Set content view to activity_add_note layout
         setContentView(R.layout.activity_add_note);
 
         // Initialize Toolbar from layout
@@ -41,7 +37,7 @@ public class AddNoteActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate menu items in ActionBar/add items to ActionBar
-        getMenuInflater().inflate(R.menu.menu_add_note_toolbar, menu);
+        getMenuInflater().inflate(R.menu.menu_note_toolbar, menu);
         return true;
     }
 
@@ -117,7 +113,7 @@ public class AddNoteActivity extends AppCompatActivity {
         } else {
             // Check if title contains characters other than a-z A-Z 0-9 ?!
             // If not, allow them to save file
-            if(note_title.getText().toString().matches("[a-zA-Z0-9!?.]+")) {
+            if(note_title.getText().toString().matches("[a-zA-Z0-9!?. ]+")) {
                 // Create FileOutputStream for writing file
                 FileOutputStream fos;
                 // Create new file to see if title already exists

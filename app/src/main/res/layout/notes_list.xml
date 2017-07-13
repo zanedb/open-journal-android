@@ -1,7 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="72dp">
+    android:layout_height="72dp"
+    android:descendantFocusability="blocksDescendants">
 
     <ImageButton
         android:id="@+id/notes_list_delete_button"
@@ -15,7 +16,8 @@
         android:background="@android:color/transparent"
         android:paddingEnd="4dp"
         android:src="@drawable/ic_delete_black_24dp"
-        tools:text="Detail"/>
+        android:title="@string/delete_button"
+        android:contentDescription="@string/cd_delete"/>
 
     <RelativeLayout
         android:id="@+id/recipe_list_text_layout"
@@ -29,7 +31,7 @@
             android:id="@+id/notes_list_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
             android:textSize="16sp"
             tools:text="Title" />
 
@@ -38,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/notes_list_title"
-            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="2dp"
             android:ellipsize="end"
             android:maxLines="3"
