@@ -111,6 +111,7 @@ public class AddNoteActivity extends AppCompatActivity {
         EditText note_title = (EditText) findViewById(R.id.note_title_edittext);
 
         // TODO 2: Sanitize strings to prevent backslashes, injection, etc.
+        // TODO 3: Check if file exists before saving
 
         // Create FileOutputStream for writing file
         FileOutputStream fos;

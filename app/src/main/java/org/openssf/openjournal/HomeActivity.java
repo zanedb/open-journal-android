@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -23,9 +21,6 @@ public class HomeActivity extends AppCompatActivity {
     // Define ListView
     private ListView lv;
 
-    // Debugging boolean
-    boolean debugOn = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +29,7 @@ public class HomeActivity extends AppCompatActivity {
 
         // Initialize ListView from XML
         lv = (ListView) findViewById(R.id.list_view_home_activity);
-        // Create ArrayList for data
+        // Initialize ArrayList for data
         ArrayList<String> allNotes = getAllNotes(getApplicationContext());
         // Check if empty ArrayList
         if(allNotes.size() == 0) {
@@ -44,7 +39,8 @@ public class HomeActivity extends AppCompatActivity {
         } else {
             // Otherwise, display list items
             // Create new adapter with note titles
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, allNotes);
+            //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, allNotes);
+            NotesAdapter adapter = new NotesAdapter(this, allNotes);
             // Set ListView adapter
             lv.setAdapter(adapter);
             // Set ListView to visible
@@ -112,9 +108,14 @@ public class HomeActivity extends AppCompatActivity {
         return noteText;
     }
 
-    /*public void debug(String tag, String msg) {
-        if(debugOn) {
-            Log.d(tag, msg);
-        }
-    }*/
+    // Override onRestart() method to recreate activity
+    // Workaround to refresh list of notes
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
+    }
+
+
 }
