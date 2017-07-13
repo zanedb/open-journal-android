@@ -15,6 +15,11 @@
 
     <!-- HomeActivity Java Strings -->
     <string name="no_notes">Add a note to get started..</string>
+    <string name="delete_note">Delete note</string>
+    <string name="delete_note_confirm">Are you sure you want to PERMANENTLY delete this note?</string>
+    <string name="delete">Delete</string>
+    <string name="note_deleted">Note deleted</string>
+    <string name="note_not_deleted">Deletion failed. Does it exist?</string>
 
     <!-- AddNoteActivity Layout Strings -->
     <string name="note_title_hint">Title</string>

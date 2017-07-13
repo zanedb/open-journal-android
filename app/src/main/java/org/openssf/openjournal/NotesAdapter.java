@@ -1,8 +1,6 @@
 package org.openssf.openjournal;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.drawable.Icon;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,13 +18,13 @@ import java.util.ArrayList;
  * @author github.com/zanedb
  */
 
-public class NotesAdapter extends BaseAdapter {
+class NotesAdapter extends BaseAdapter {
 
     private Context requiredContext;
     private LayoutInflater layoutInflater;
     private ArrayList<String> allNoteTitles;
 
-    public NotesAdapter(Context context, ArrayList<String> notes) {
+    NotesAdapter(Context context, ArrayList<String> notes) {
         requiredContext = context;
         allNoteTitles = notes;
         layoutInflater = (LayoutInflater) requiredContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -58,13 +56,17 @@ public class NotesAdapter extends BaseAdapter {
         // Initialize note deletion icon from layout
         ImageButton deleteNoteButton = (ImageButton) rowView.findViewById(R.id.notes_list_delete_button);
 
-        String noteTitle = (String) getItem(position);
+        final String noteTitle = (String) getItem(position);
         titleTextView.setText(noteTitle);
         subtitleTextView.setText("Add subtitle text here..");
+        // TODO 5: Set up Subtitle text excerpt
 
         deleteNoteButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                // TODO 4: Delete note on button press
+                Note note = new Note();
+                note.nameOfNote = noteTitle;
+                note.context = requiredContext;
+                note.delete();
             }
         });
 

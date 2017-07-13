@@ -9,17 +9,15 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
 
     // Define ListView
     private ListView lv;
+    // Define allNotes ArrayList
+    public static ArrayList<String> allNotes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +28,7 @@ public class HomeActivity extends AppCompatActivity {
         // Initialize ListView from XML
         lv = (ListView) findViewById(R.id.list_view_home_activity);
         // Initialize ArrayList for data
-        ArrayList<String> allNotes = getAllNotes(getApplicationContext());
+        allNotes = getAllNotes(getApplicationContext());
         // Check if empty ArrayList
         if(allNotes.size() == 0) {
             // If so, display text about it
@@ -76,46 +74,12 @@ public class HomeActivity extends AppCompatActivity {
         return notes;
     }
 
-    public String readNote(String noteName) {
-        // Set noteText to error code in case try/catch fails
-        String noteText = getString(R.string.ioexception);
-        try {
-            // Initialize and create FileInputStream with filename
-            FileInputStream fis = openFileInput(noteName+"_openJournalNote");
-            // Initialize and create InputStreamReader based on FileInputStream
-            InputStreamReader isr = new InputStreamReader(fis);
-            // Initialize and create BufferedReader based on InputStreamReader
-            BufferedReader bufferedReader = new BufferedReader(isr);
-            // Create/initialize StringBuilder
-            StringBuilder sb = new StringBuilder();
-            // Create string for checking if we have next line
-            String line;
-            // While loop to read next string
-            while ((line = bufferedReader.readLine()) != null) {
-                // Append next line to total text read
-                sb.append(line);
-            }
-            // Set text string
-            noteText = sb.toString();
-            // Closing streams
-            fis.close();
-            isr.close();
-            bufferedReader.close();
-        } catch (IOException e) {
-            // Do nothing if failure, as noteText will equal R.string.ioexception
-        }
-        // Return string
-        return noteText;
-    }
-
-    // Override onRestart() method to recreate activity
-    // Workaround to refresh list of notes
+    // Override onRestart() method to run refreshList()
     @Override
     public void onRestart() {
         super.onRestart();
         finish();
         startActivity(getIntent());
+        // TODO 7: Actually update ListView instead of restarting Activity
     }
-
-
 }
