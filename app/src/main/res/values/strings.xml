@@ -37,4 +37,8 @@
     <!-- Error Strings -->
     <string name="file_not_found_exception">The file could not be found</string>
     <string name="ioexception">An unexpected error occurred</string>
+    <string name="file_already_exists">File already exists!</string>
+    <string name="unsupported_characters">Unsupported characters!</string>
+    <string name="unsupported_characters_long">Unfortunately, openJournal does not yet support some of the characters you entered. We currently support: a&#8211;z, A&#8211;Z, 0&#8211;9, ! and ?. Submit an issue at http://bit.ly/issueOJ to request this.</string>
+    <string name="empty_text">You didn\'t write anything!</string>
 </resources>

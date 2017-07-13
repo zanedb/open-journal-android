@@ -5,6 +5,7 @@ The simple notes platform you know and love, on Android! A version of [this note
 ## To Do/Planned Features (for both versions)
 - [x] Basic UI based on [the original](https://github.com/openssf/open-journal)
 - [ ] A simple notes system
+- [ ] Advanced features such as searching notes and selecting multiple notes for deletion at once
 - [ ] Powerful Encryption
 - [ ] Password/PIN/Fingerprint Note Locking
 - [ ] Notes Synchronization between Platforms
