@@ -56,10 +56,23 @@ class NotesAdapter extends BaseAdapter {
         // Initialize note deletion icon from layout
         ImageButton deleteNoteButton = (ImageButton) rowView.findViewById(R.id.notes_list_delete_button);
 
+        // Get title of note from ArrayList
         final String noteTitle = (String) getItem(position);
         titleTextView.setText(noteTitle);
-        subtitleTextView.setText("Add subtitle text here..");
-        // TODO 5: Set up Subtitle text excerpt
+        // Get text of note
+        Note note = new Note(requiredContext,noteTitle);
+        // Remove all but 8 characters and set subtitle text to that
+        int numberOfCharacters = note.readNote().length();
+        if(numberOfCharacters > 50) {
+            subtitleTextView.setText(note.readNote().substring(0,50)+"..");
+        } else if(numberOfCharacters > 30) {
+            subtitleTextView.setText(note.readNote().substring(0,30)+"..");
+        } else if(numberOfCharacters > 15) {
+            subtitleTextView.setText(note.readNote().substring(0,15)+"..");
+        } else if(numberOfCharacters < 15) {
+            subtitleTextView.setText(note.readNote()+"..");
+        }
+
 
         deleteNoteButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {

@@ -20,7 +20,7 @@
         android:contentDescription="@string/cd_delete"/>
 
     <RelativeLayout
-        android:id="@+id/recipe_list_text_layout"
+        android:id="@+id/notes_list_text_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
