@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -48,10 +47,10 @@ class Note {
                         boolean deleted = file.delete();
                         if(deleted) {
                             // WORKAROUND TO ListView refreshing - serves purpose of HomeActivity.onRestart() function
-                            // Start new Activity
-                            context.startActivity(new Intent(context, HomeActivity.class));
                             // Finish current activity
                             ((Activity)context).finish();
+                            // Start new Activity
+                            context.startActivity(new Intent(context, HomeActivity.class));
                             // TODO 6: Fix this workaround so it automatically updates ListView and doesn't use a workaround
                             // If successful, tell user
                             Toast.makeText(context, context.getResources().getString(R.string.note_deleted), Toast.LENGTH_SHORT).show();

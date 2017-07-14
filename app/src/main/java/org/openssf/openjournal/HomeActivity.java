@@ -47,7 +47,6 @@ public class HomeActivity extends AppCompatActivity {
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Log.d("ITEMCLICKED","Item clicked!! title: "+allNotes.get(position));
                     // Get title of note
                     String noteTitle = allNotes.get(position);
                     // Create new intent for opening ExistingNoteActivity

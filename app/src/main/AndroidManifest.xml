@@ -25,7 +25,7 @@
             android:theme="@style/NoToolbarTheme" />
         <activity
             android:name=".ExistingNoteActivity"
-            android:theme="@style/NoToolbarTheme"></activity>
+            android:theme="@style/NoToolbarTheme"/>
     </application>
 
 </manifest>

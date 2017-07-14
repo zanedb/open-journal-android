@@ -6,6 +6,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -41,7 +42,7 @@ public class ExistingNoteActivity extends AppCompatActivity {
         // Initialize noteTitle
         noteTitle = this.getIntent().getExtras().getString("note_title");
         // Initialize note
-        note = new Note(getApplicationContext(),noteTitle);
+        note = new Note(this,noteTitle);
 
         // Set title EditText to noteTitle
         title.setText(noteTitle);
@@ -74,7 +75,7 @@ public class ExistingNoteActivity extends AppCompatActivity {
                 saveNote();
                 return true;
             case R.id.delete_icon_existing_note_toolbar:
-                deleteIcon();
+                note.delete();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -206,11 +207,5 @@ public class ExistingNoteActivity extends AppCompatActivity {
                 })
                 // Show dialog box
                 .show();
-    }
-
-    void deleteIcon() {
-        note.delete();
-        Toast.makeText(ExistingNoteActivity.this, getString(R.string.note_deleted), Toast.LENGTH_SHORT).show();
-        finish();
     }
 }
