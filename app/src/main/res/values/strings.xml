@@ -5,8 +5,8 @@
     <string name="start">Begin</string>
     <string name="slide_1_title">openJournal</string>
     <string name="slide_1_desc">A simple &amp; easy notes app</string>
-    <string name="slide_2_title">Desktop and Mobile</string>
-    <string name="slide_2_desc">Available on Linux, Mac, Windows, and Android</string>
+    <string name="slide_2_title">Multi-Platform (soon!)</string>
+    <string name="slide_2_desc">Available on Android, coming soon to other platforms</string>
     <string name="slide_3_title">Open-Source &amp; Ad Free</string>
     <string name="slide_3_desc">The entire app is available on GitHub (openssf/open-journal-android) and is free (donation-supported). Additionally, there is no advertising.</string>
 
