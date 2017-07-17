@@ -24,7 +24,10 @@
     <string name="note_deleted">Note deleted</string>
     <string name="note_not_deleted">Deletion failed. Does it exist?</string>
 
-    <!-- AddNoteActivity Layout Strings -->
+    <!-- HomeActivity Layout Strings (includes menus) -->
+    <string name="search_button">Search</string>
+
+    <!-- AddNoteActivity Layout Strings (includes menus) -->
     <string name="note_title_hint">Title</string>
     <string name="note_hint">Write your note here..</string>
     <string name="done_button">Done</string>
@@ -37,7 +40,7 @@
     <string name="discarding">Discarding note..</string>
     <string name="saving_note">Saving note..</string>
 
-    <!-- ExistingNoteActivity Layout Strings -->
+    <!-- ExistingNoteActivity Layout Strings (includes menus) -->
     <string name="delete_button">Delete permananently</string>
 
     <!-- ExistingNoteActivity Java Strings -->

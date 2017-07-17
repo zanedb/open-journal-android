@@ -7,6 +7,15 @@
     android:fitsSystemWindows="true"
     tools:context="org.openssf.openjournal.HomeActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_home_activity"
+        android:minHeight="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:titleTextColor="@android:color/white"
+        android:background="?attr/colorPrimary">
+    </android.support.v7.widget.Toolbar>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

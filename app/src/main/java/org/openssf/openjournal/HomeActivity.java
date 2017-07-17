@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -72,6 +74,31 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(addnoteintent);
             }
         });
+
+        // Initialize Toolbar from layout
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_home_activity);
+        // Set as Action Bar
+        setSupportActionBar(toolbar);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate menu items in ActionBar/add items to ActionBar
+        getMenuInflater().inflate(R.menu.menu_home_activity_toolbar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle ClickEvents on ActionBar/Toolbar items
+        switch (item.getItemId()) {
+            // Checkmark ClickEvent for saving note
+            case R.id.search_icon:
+                search();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public ArrayList<String> getAllNotes(Context context) {
@@ -98,5 +125,9 @@ public class HomeActivity extends AppCompatActivity {
         finish();
         startActivity(getIntent());
         // TODO 7: Actually update ListView instead of restarting Activity
+    }
+
+    public void search() {
+        // TODO 1: Write search bar function here to search notes
     }
 }
