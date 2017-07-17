@@ -41,7 +41,6 @@ public class HomeActivity extends AppCompatActivity {
         } else {
             // Otherwise, display list items
             // Create new adapter with note titles
-            //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, allNotes);
             NotesAdapter adapter = new NotesAdapter(this, allNotes);
             // Set ListView adapter
             lv.setAdapter(adapter);
@@ -94,7 +93,7 @@ public class HomeActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             // Checkmark ClickEvent for saving note
             case R.id.search_icon:
-                search();
+                searchIcon();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -127,7 +126,7 @@ public class HomeActivity extends AppCompatActivity {
         // TODO 7: Actually update ListView instead of restarting Activity
     }
 
-    public void search() {
-        // TODO 1: Write search bar function here to search notes
+    public void searchIcon() {
+        // TODO 1: Add code here to search notes
     }
 }
