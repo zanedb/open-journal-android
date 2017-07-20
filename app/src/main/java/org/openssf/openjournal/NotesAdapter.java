@@ -62,22 +62,22 @@ class NotesAdapter extends BaseAdapter {
         // Get text of note
         Note note = new Note(requiredContext,noteTitle);
         // Remove all but 8 characters and set subtitle text to that
-        int numberOfCharacters = note.readNote().length();
+        int numberOfCharacters = note.readNote(false).length();
         if(numberOfCharacters > 50) {
-            subtitleTextView.setText(note.readNote().substring(0,50)+"..");
+            subtitleTextView.setText(note.readNote(false).substring(0,50)+"..");
         } else if(numberOfCharacters > 30) {
-            subtitleTextView.setText(note.readNote().substring(0,30)+"..");
+            subtitleTextView.setText(note.readNote(false).substring(0,30)+"..");
         } else if(numberOfCharacters > 15) {
-            subtitleTextView.setText(note.readNote().substring(0,15)+"..");
+            subtitleTextView.setText(note.readNote(false).substring(0,15)+"..");
         } else if(numberOfCharacters < 15) {
-            subtitleTextView.setText(note.readNote()+"..");
+            subtitleTextView.setText(note.readNote(false)+"..");
         }
 
 
         deleteNoteButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Note note = new Note(requiredContext,noteTitle);
-                note.delete();
+                note.delete(true);
             }
         });
 

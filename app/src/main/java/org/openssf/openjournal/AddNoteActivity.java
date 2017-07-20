@@ -15,6 +15,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class AddNoteActivity extends AppCompatActivity {
 
@@ -121,12 +124,21 @@ public class AddNoteActivity extends AppCompatActivity {
                 if(filecheck.exists()) {
                     // If it exists, warn users
                     Toast.makeText(AddNoteActivity.this, getString(R.string.file_already_exists), Toast.LENGTH_SHORT).show();
+                } else if(note.getText().toString().contains("openJournalTimestamp_")){
+                    // Check if note contains timestamp identifier (could cause rendering problems)
+                    // If so, display unsupported characters warning
+                    unsupportedCharacters();
                 } else {
                     // Otherwise, create it
                     try {
                         // Open FileOutputStream
                         fos = openFileOutput(note_title.getText().toString()+"_openJournalNote", Context.MODE_PRIVATE);
-                        fos.write(note.getText().toString().getBytes());
+                        // Create new String to store timestamp and add identifier
+                        String timestamp = "openJournalTimestamp_";
+                        // Add date/time info to String
+                        timestamp += new SimpleDateFormat("MM/dd/yyyy hh:mm aa", Locale.US).format(new Date());
+                        // Write text with appended timestamp
+                        fos.write((note.getText().toString()+timestamp).getBytes());
                         // Tell user the note was saved
                         Toast.makeText(AddNoteActivity.this, getString(R.string.saving_note), Toast.LENGTH_SHORT).show();
                         fos.close();
@@ -139,20 +151,24 @@ public class AddNoteActivity extends AppCompatActivity {
                 }
             } else {
                 // Otherwise, show dialog box explaining the error
-                // Create & initialize new AlertDialog Builder
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                // Set dialog title, message
-                builder.setTitle(getString(R.string.unsupported_characters))
-                        .setMessage(getString(R.string.unsupported_characters_long))
-                        // Add okay button
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // Do nothing, just an alert message
-                            }
-                        })
-                        // Show dialog box
-                        .show();
+                unsupportedCharacters();
             }
         }
+    }
+
+    void unsupportedCharacters() {
+        // Create & initialize new AlertDialog Builder
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        // Set dialog title, message
+        builder.setTitle(getString(R.string.unsupported_characters))
+                .setMessage(getString(R.string.unsupported_characters_long))
+                // Add okay button
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do nothing, just an alert message
+                    }
+                })
+                // Show dialog box
+                .show();
     }
 }

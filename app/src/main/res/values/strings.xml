@@ -39,6 +39,7 @@
     <string name="discard">Discard</string>
     <string name="discarding">Discarding note..</string>
     <string name="saving_note">Saving note..</string>
+    <string name="last_modified">Last modified: %1$s</string>
 
     <!-- ExistingNoteActivity Layout Strings (includes menus) -->
     <string name="delete_button">Delete permananently</string>

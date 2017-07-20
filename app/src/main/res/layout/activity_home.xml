@@ -7,14 +7,30 @@
     android:fitsSystemWindows="true"
     tools:context="org.openssf.openjournal.HomeActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar_home_activity"
-        android:minHeight="?attr/actionBarSize"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:titleTextColor="@android:color/white"
-        android:background="?attr/colorPrimary">
-    </android.support.v7.widget.Toolbar>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_home_activity"
+            android:minHeight="?attr/actionBarSize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:titleTextColor="@android:color/white"
+            android:background="?attr/colorPrimary">
+        </android.support.v7.widget.Toolbar>
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/list_view_home_activity"
+            android:visibility="invisible"
+            android:descendantFocusability="afterDescendants">
+            <!-- Content will be added dynamically. Nothing is needed here. -->
+
+        </ListView>
+    </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
@@ -23,16 +39,6 @@
         android:text="@string/no_notes"
         android:id="@+id/no_notes_textview"
         android:layout_gravity="center"/>
-
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/list_view_home_activity"
-        android:visibility="invisible"
-        android:descendantFocusability="blocksDescendants">
-        <!-- Content will be added dynamically. Nothing is needed here. -->
-
-    </ListView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/add_note_fab"

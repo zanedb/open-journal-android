@@ -28,7 +28,7 @@ class Note {
         nameOfNote = noteName;
     }
 
-    void delete() {
+    void delete(final boolean isSameActivity) {
         // Locate file directory
         final File dir = context.getFilesDir();
         // Create & initialize new AlertDialog Builder
@@ -48,12 +48,22 @@ class Note {
                         if(deleted) {
                             // WORKAROUND TO ListView refreshing - serves purpose of HomeActivity.onRestart() function
                             // Finish current activity
-                            ((Activity)context).finish();
-                            // Start new Activity
-                            context.startActivity(new Intent(context, HomeActivity.class));
-                            // TODO 6: Fix this workaround so it automatically updates ListView and doesn't use a workaround
-                            // If successful, tell user
-                            Toast.makeText(context, context.getResources().getString(R.string.note_deleted), Toast.LENGTH_SHORT).show();
+                            // TODO: Fix this workaround so it automatically updates ListView and doesn't use a workaround
+                            if(isSameActivity) {
+                                // Finish current activity
+                                ((Activity)context).finish();
+                                // Override transition
+                                ((Activity)context).overridePendingTransition(0, 0);
+                                // Start new Activity
+                                context.startActivity(new Intent(context, HomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                                // If successful, tell user
+                                Toast.makeText(context, context.getResources().getString(R.string.note_deleted), Toast.LENGTH_SHORT).show();
+                            } else {
+                                // Finish current activity
+                                ((Activity)context).finish();
+                                // If successful, tell user
+                                Toast.makeText(context, context.getResources().getString(R.string.note_deleted), Toast.LENGTH_SHORT).show();
+                            }
                         } else {
                             // If unsuccessful, tell user
                             Toast.makeText(context, context.getResources().getString(R.string.note_not_deleted), Toast.LENGTH_SHORT).show();
@@ -70,7 +80,7 @@ class Note {
                 .show();
     }
 
-    String readNote() {
+    String readNote(boolean isLastModified) {
         // Set noteText to error code in case try/catch fails
         String noteText = context.getResources().getString(R.string.ioexception);
         try {
@@ -91,6 +101,12 @@ class Note {
             }
             // Set text string
             noteText = sb.toString();
+            // If note has timestamp, remove it
+            if(noteText.contains("openJournalTimestamp_") && !isLastModified) {
+                noteText = noteText.substring(0, noteText.length()-40);
+            } else if(noteText.contains("openJournalTimestamp_") && !isLastModified) {
+                noteText = noteText.substring(noteText.length()-19);
+            }
             // Closing streams
             fis.close();
             isr.close();
@@ -101,5 +117,4 @@ class Note {
         // Return string
         return noteText;
     }
-
 }

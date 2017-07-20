@@ -41,5 +41,12 @@
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:background="@android:color/transparent"/>
+
+        <TextView
+            android:id="@+id/note_last_modified_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:layout_gravity="end"/>
     </LinearLayout>
 </RelativeLayout>

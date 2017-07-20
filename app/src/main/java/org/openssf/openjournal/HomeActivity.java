@@ -1,6 +1,5 @@
 package org.openssf.openjournal;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -32,7 +31,7 @@ public class HomeActivity extends AppCompatActivity {
         // Initialize ListView from XML
         lv = (ListView) findViewById(R.id.list_view_home_activity);
         // Initialize ArrayList for data
-        allNotes = getAllNotes(getApplicationContext());
+        allNotes = getAllNotes();
         // Check if empty ArrayList
         if(allNotes.size() == 0) {
             // If so, display text about it
@@ -100,17 +99,16 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    public ArrayList<String> getAllNotes(Context context) {
+    public ArrayList<String> getAllNotes() {
         // Create ArrayList to store note titles in
         ArrayList notes = new ArrayList();
         // Create File array of filenames
         File[] filenames = this.getFilesDir().listFiles();
         // If the File's name is a note, then add it to the notes ArrayList
-        int fnLength = filenames.length;
-        for(int i=0;i<fnLength;i++) {
-            if(filenames[i].getName().endsWith("_openJournalNote")) {
+        for(File filename : filenames) {
+            if (filename.getName().endsWith("_openJournalNote")) {
                 // Add to ArrayList and remove _openJournalNote identifier from display
-                notes.add(filenames[i].getName().substring(0, filenames[i].getName().length() - 16));
+                notes.add(filename.getName().substring(0, filename.getName().length() - 16));
             }
         }
         // Return the notes ArrayList
@@ -122,11 +120,12 @@ public class HomeActivity extends AppCompatActivity {
     public void onRestart() {
         super.onRestart();
         finish();
-        startActivity(getIntent());
-        // TODO 7: Actually update ListView instead of restarting Activity
+        overridePendingTransition(0, 0);
+        startActivity(getIntent().addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+        // TODO: Actually update ListView instead of restarting Activity
     }
 
     public void searchIcon() {
-        // TODO 1: Add code here to search notes
+        // TODO: Add code here to search notes
     }
 }

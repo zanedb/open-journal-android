@@ -6,15 +6,20 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class ExistingNoteActivity extends AppCompatActivity {
 
@@ -38,6 +43,9 @@ public class ExistingNoteActivity extends AppCompatActivity {
         title = (EditText) findViewById(R.id.existing_note_title_edittext);
         text = (EditText) findViewById(R.id.existing_note_edittext);
 
+        // Initialize "Last Modified" TextView from layout
+        TextView lm = (TextView) findViewById(R.id.note_last_modified_textview);
+
         // Initialize noteTitle
         noteTitle = this.getIntent().getExtras().getString("note_title");
         // Initialize note
@@ -46,7 +54,10 @@ public class ExistingNoteActivity extends AppCompatActivity {
         // Set title EditText to noteTitle
         title.setText(noteTitle);
         // Set text EditText to  note.readNote()
-        text.setText(note.readNote());
+        text.setText(note.readNote(false));
+
+        // Set text of "last modified" TextView
+        lm.setText(String.format(getString(R.string.last_modified), note.readNote(true)));
 
         // Initialize Toolbar from layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_existing_note);
@@ -74,7 +85,7 @@ public class ExistingNoteActivity extends AppCompatActivity {
                 saveNote();
                 return true;
             case R.id.delete_icon_existing_note_toolbar:
-                note.delete();
+                note.delete(false);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -96,7 +107,7 @@ public class ExistingNoteActivity extends AppCompatActivity {
     }
 
     private void handleBackInput() {
-        if(title.getText().toString().equals(noteTitle) && text.getText().toString().equals(note.readNote())) {
+        if(title.getText().toString().equals(noteTitle) && text.getText().toString().equals(note.readNote(false))) {
             // Note is unchanged, exit activity
             finish();
         } else {
@@ -126,7 +137,7 @@ public class ExistingNoteActivity extends AppCompatActivity {
     }
 
     private void saveNote() {
-        if(title.getText().toString().equals(noteTitle) && text.getText().toString().equals(note.readNote())) {
+        if(title.getText().toString().equals(noteTitle) && text.getText().toString().equals(note.readNote(false))) {
             // Note is unchanged, exit activity
             finish();
         } else {
@@ -138,50 +149,59 @@ public class ExistingNoteActivity extends AppCompatActivity {
                         // If it exists, warn users
                         Toast.makeText(ExistingNoteActivity.this, getString(R.string.file_already_exists), Toast.LENGTH_SHORT).show();
                     } else {
-                        if (!text.getText().toString().equals(note.readNote())) {
-                            // If title and text are changed, save new note under different title and remove old one
-                            saveUpdatedNote();
-                        } else {
-                            // If only title is changed, save new title and remove old one
-                            saveUpdatedNote();
-                        }
+                        saveUpdatedTitleNote();
                     }
                 } else {
                     unsupportedCharacters();
                 }
             } else {
                 // If title is not changed
-                if (!text.getText().toString().equals(note.readNote())) {
+                if (!text.getText().toString().equals(note.readNote(false))) {
                     // If only text is changed, save note under same title
-                    try {
-                        // Open FileOutputStream
-                        fos = openFileOutput(title.getText().toString() + "_openJournalNote", Context.MODE_PRIVATE);
-                        fos.write(text.getText().toString().getBytes());
-                        // Tell user the note was saved
-                        Toast.makeText(ExistingNoteActivity.this, getString(R.string.saving_note), Toast.LENGTH_SHORT).show();
-                        fos.close();
-                        finish();
-                    } catch (FileNotFoundException e) {
-                        Toast.makeText(ExistingNoteActivity.this, getString(R.string.file_not_found_exception), Toast.LENGTH_SHORT).show();
-                    } catch (IOException e) {
-                        Toast.makeText(ExistingNoteActivity.this, getString(R.string.ioexception), Toast.LENGTH_SHORT).show();
-                    }
+                    saveSameTitleNote();
                 }
             }
         }
     }
 
-    void saveUpdatedNote() {
+    void saveUpdatedTitleNote() {
         try {
             // Open FileOutputStream
             fos = openFileOutput(title.getText().toString() + "_openJournalNote", Context.MODE_PRIVATE);
-            fos.write(text.getText().toString().getBytes());
+            // Create new String to store timestamp and add identifier
+            String timestamp = "openJournalTimestamp_";
+            // Add date/time info to String
+            timestamp += new SimpleDateFormat("MM/dd/yyyy hh:mm aa", Locale.US).format(new Date());
+            // Write new file name
+            fos.write((text.getText().toString()+timestamp).getBytes());
+            // Create new file for old title
             File oldtitle = new File(getApplicationContext().getFilesDir(), noteTitle + "_openJournalNote");
             if (oldtitle.delete()) {
                 Toast.makeText(ExistingNoteActivity.this, getString(R.string.new_title_saved), Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(ExistingNoteActivity.this, getString(R.string.general_error), Toast.LENGTH_SHORT).show();
             }
+            fos.close();
+            finish();
+        } catch (FileNotFoundException e) {
+            Toast.makeText(ExistingNoteActivity.this, getString(R.string.file_not_found_exception), Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            Toast.makeText(ExistingNoteActivity.this, getString(R.string.ioexception), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    void saveSameTitleNote() {
+        try {
+            // Open FileOutputStream
+            fos = openFileOutput(title.getText().toString() + "_openJournalNote", Context.MODE_PRIVATE);
+            // Create new String to store timestamp and add identifier
+            String timestamp = "openJournalTimestamp_";
+            // Add date/time info to String
+            timestamp += new SimpleDateFormat("MM/dd/yyyy hh:mm aa", Locale.US).format(new Date());
+            // Write new file name
+            fos.write((text.getText().toString()+timestamp).getBytes());
+            // Tell user the note was saved
+            Toast.makeText(ExistingNoteActivity.this, getString(R.string.saving_note), Toast.LENGTH_SHORT).show();
             fos.close();
             finish();
         } catch (FileNotFoundException e) {
