@@ -1,20 +1,27 @@
 package org.openssf.openjournal;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -138,6 +145,7 @@ public class AddNoteActivity extends AppCompatActivity {
                         // Add date/time info to String
                         timestamp += new SimpleDateFormat("MM/dd/yyyy hh:mm aa", Locale.US).format(new Date());
                         // Write text with appended timestamp
+                        // Replace \n line breaks with official line breaks (workaround to fix issue)
                         fos.write((note.getText().toString()+timestamp).getBytes());
                         // Tell user the note was saved
                         Toast.makeText(AddNoteActivity.this, getString(R.string.saving_note), Toast.LENGTH_SHORT).show();

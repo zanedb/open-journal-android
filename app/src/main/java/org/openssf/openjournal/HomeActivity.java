@@ -79,6 +79,9 @@ public class HomeActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
     }
 
+    /**
+     * TEMPORARILY DISABLE SEARCH
+     * Will be coming in later version..
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate menu items in ActionBar/add items to ActionBar
@@ -97,7 +100,7 @@ public class HomeActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
+    } **/
 
     public ArrayList<String> getAllNotes() {
         // Create ArrayList to store note titles in
