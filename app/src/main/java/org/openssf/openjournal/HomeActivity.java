@@ -110,27 +110,6 @@ public class HomeActivity extends AppCompatActivity {
         }
     } **/
 
-    /** UNUSED/DEPRECATED
-     *  getAllNotes() function
-     *  switched to SQLite
-     *  TODO to be removed
-    public ArrayList<String> getAllNotes() {
-        // Create ArrayList to store note titles in
-        ArrayList notes = new ArrayList();
-        // Create File array of filenames
-        File[] filenames = this.getFilesDir().listFiles();
-        // If the File's name is a note, then add it to the notes ArrayList
-        for(File filename : filenames) {
-            if (filename.getName().endsWith("_openJournalNote")) {
-                // Add to ArrayList and remove _openJournalNote identifier from display
-                notes.add(filename.getName().substring(0, filename.getName().length() - 16));
-            }
-        }
-        // Return the notes ArrayList
-        return notes;
-     }
-     **/
-
     // Override onRestart() method to run refreshList()
     @Override
     public void onRestart() {

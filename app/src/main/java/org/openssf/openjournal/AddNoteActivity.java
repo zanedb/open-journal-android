@@ -120,63 +120,6 @@ public class AddNoteActivity extends AppCompatActivity {
         }
     }
 
-    /** UNUSED/DEPRECATED
-     *  Old saveNote() Function
-     *  Saves note in local storage
-     *  Replaced by new SQLite saveNote() function
-    private void saveNote() {
-        // Get value of note & title
-        EditText note = (EditText) findViewById(R.id.note_edittext);
-        EditText note_title = (EditText) findViewById(R.id.note_title_edittext);
-
-        // Check if title is empty
-        if(note_title.getText().toString().equals("")) {
-            Toast.makeText(AddNoteActivity.this, getString(R.string.empty_text), Toast.LENGTH_SHORT).show();
-        } else {
-            // Check if title contains characters other than a-z A-Z 0-9 ?!
-            // If not, allow them to save file
-            if(note_title.getText().toString().matches("[a-zA-Z0-9!?. ]+")) {
-                // Create FileOutputStream for writing file
-                FileOutputStream fos;
-                // Create new file to see if title already exists
-                File filecheck = new File(this.getFilesDir(), note_title.getText().toString()+"_openJournalNote");
-                if(filecheck.exists()) {
-                    // If it exists, warn users
-                    Toast.makeText(AddNoteActivity.this, getString(R.string.file_already_exists), Toast.LENGTH_SHORT).show();
-                } else if(note.getText().toString().contains("openJournalTimestamp_")){
-                    // Check if note contains timestamp identifier (could cause rendering problems)
-                    // If so, display unsupported characters warning
-                    unsupportedCharacters();
-                } else {
-                    // Otherwise, create it
-                    try {
-                        // Open FileOutputStream
-                        fos = openFileOutput(note_title.getText().toString()+"_openJournalNote", Context.MODE_PRIVATE);
-                        // Create new String to store timestamp and add identifier
-                        String timestamp = "openJournalTimestamp_";
-                        // Add date/time info to String
-                        timestamp += new SimpleDateFormat("MM/dd/yyyy hh:mm aa", Locale.US).format(new Date());
-                        // Write text with appended timestamp
-                        // Replace \n line breaks with official line breaks (workaround to fix issue)
-                        fos.write((note.getText().toString()+timestamp).getBytes());
-                        // Tell user the note was saved
-                        Toast.makeText(AddNoteActivity.this, getString(R.string.saving_note), Toast.LENGTH_SHORT).show();
-                        fos.close();
-                        finish();
-                    } catch (FileNotFoundException e) {
-                        Toast.makeText(AddNoteActivity.this, getString(R.string.file_not_found_exception), Toast.LENGTH_SHORT).show();
-                    } catch (IOException e) {
-                        Toast.makeText(AddNoteActivity.this, getString(R.string.ioexception), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            } else {
-                // Otherwise, show dialog box explaining the error
-                unsupportedCharacters();
-            }
-        }
-    }
-    **/
-
     private void saveNote() {
         // Get value of note & title
 

@@ -79,47 +79,4 @@ class Note {
                 // Show dialog box
                 .show();
     }
-
-    /* UNUSED/DEPRECATED
-       readNote() function
-       Reads from local storage
-       Replaced with new SQLite storage
-    String readNote(boolean isLastModified) {
-        // Set noteText to error code in case try/catch fails
-        String noteText = context.getResources().getString(R.string.ioexception);
-        try {
-            // Initialize and create FileInputStream with filename
-            FileInputStream fis = context.openFileInput(nameOfNote+"_openJournalNote");
-            // Initialize and create InputStreamReader based on FileInputStream
-            InputStreamReader isr = new InputStreamReader(fis);
-            // Initialize and create BufferedReader based on InputStreamReader
-            BufferedReader bufferedReader = new BufferedReader(isr);
-            // Create/initialize StringBuilder
-            StringBuilder sb = new StringBuilder();
-            // Create string for checking if we have next line
-            String line;
-            // While loop to read next string
-            while ((line = bufferedReader.readLine()) != null) {
-                // Append next line to total text read
-                sb.append(line);
-            }
-            // Set text string
-            noteText = sb.toString();
-            // If note has timestamp, remove it
-            if(noteText.contains("openJournalTimestamp_") && !isLastModified) {
-                noteText = noteText.substring(0, noteText.length()-40);
-            } else if(noteText.contains("openJournalTimestamp_") && !isLastModified) {
-                noteText = noteText.substring(noteText.length()-19);
-            }
-            // Closing streams
-            fis.close();
-            isr.close();
-            bufferedReader.close();
-        } catch (IOException e) {
-            // Do nothing if failure, as noteText will equal R.string.ioexception
-        }
-        // Return string
-        return noteText;
-    }
-     */
 }

@@ -164,58 +164,6 @@ public class ExistingNoteActivity extends AppCompatActivity {
         }
     }
 
-    /** UNUSED/DEPRECATED
-     *  Note update functions
-     *  Replaced by DBHelper class in SQLite
-    void saveUpdatedTitleNote() {
-        try {
-            // Open FileOutputStream
-            fos = openFileOutput(title.getText().toString() + "_openJournalNote", Context.MODE_PRIVATE);
-            // Create new String to store timestamp and add identifier
-            String timestamp = "openJournalTimestamp_";
-            // Add date/time info to String
-            timestamp += new SimpleDateFormat("MM/dd/yyyy hh:mm aa", Locale.US).format(new Date());
-            // Write new file name
-            fos.write((text.getText().toString()+timestamp).getBytes());
-            // Create new file for old title
-            File oldtitle = new File(getApplicationContext().getFilesDir(), noteTitle + "_openJournalNote");
-            if (oldtitle.delete()) {
-                Toast.makeText(ExistingNoteActivity.this, getString(R.string.new_title_saved), Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(ExistingNoteActivity.this, getString(R.string.general_error), Toast.LENGTH_SHORT).show();
-            }
-            fos.close();
-            finish();
-            Note note = new Note(getApplicationContext(), "");
-        } catch (FileNotFoundException e) {
-            Toast.makeText(ExistingNoteActivity.this, getString(R.string.file_not_found_exception), Toast.LENGTH_SHORT).show();
-        } catch (IOException e) {
-            Toast.makeText(ExistingNoteActivity.this, getString(R.string.ioexception), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    void saveSameTitleNote() {
-        try {
-            // Open FileOutputStream
-            fos = openFileOutput(title.getText().toString() + "_openJournalNote", Context.MODE_PRIVATE);
-            // Create new String to store timestamp and add identifier
-            String timestamp = "openJournalTimestamp_";
-            // Add date/time info to String
-            timestamp += new SimpleDateFormat("MM/dd/yyyy hh:mm aa", Locale.US).format(new Date());
-            // Write new file name
-            fos.write((text.getText().toString()+timestamp).getBytes());
-            // Tell user the note was saved
-            Toast.makeText(ExistingNoteActivity.this, getString(R.string.saving_note), Toast.LENGTH_SHORT).show();
-            fos.close();
-            finish();
-        } catch (FileNotFoundException e) {
-            Toast.makeText(ExistingNoteActivity.this, getString(R.string.file_not_found_exception), Toast.LENGTH_SHORT).show();
-        } catch (IOException e) {
-            Toast.makeText(ExistingNoteActivity.this, getString(R.string.ioexception), Toast.LENGTH_SHORT).show();
-        }
-    }
-    **/
-
     void unsupportedCharacters() {
         // Show dialog box explaining the error
         // Create & initialize new AlertDialog Builder
