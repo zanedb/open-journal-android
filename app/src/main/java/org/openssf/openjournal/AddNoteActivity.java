@@ -1,10 +1,12 @@
 package org.openssf.openjournal;
 
 import android.content.DialogInterface;
+import android.renderscript.ScriptGroup;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -20,12 +22,22 @@ public class AddNoteActivity extends AppCompatActivity {
 
     // Define database helper class
     DBHelper notesdb;
+    // Define notes
+    EditText note;
+    EditText note_title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Set content view to activity_add_note layout
         setContentView(R.layout.activity_add_note);
+
+        // Initialize notes
+        note = (EditText) findViewById(R.id.note_edittext);
+        note_title = (EditText) findViewById(R.id.note_title_edittext);
+        // Set Input types of note + title EditText
+        note.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES | InputType.TYPE_TEXT_FLAG_AUTO_CORRECT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+        note_title.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES | InputType.TYPE_TEXT_FLAG_AUTO_CORRECT);
 
         // Initialize database helper class
         notesdb = new DBHelper(this);
@@ -167,8 +179,6 @@ public class AddNoteActivity extends AppCompatActivity {
 
     private void saveNote() {
         // Get value of note & title
-        EditText note = (EditText) findViewById(R.id.note_edittext);
-        EditText note_title = (EditText) findViewById(R.id.note_title_edittext);
 
         // Check if title is empty
         if(note_title.getText().toString().equals("")) {

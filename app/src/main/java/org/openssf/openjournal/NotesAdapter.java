@@ -69,16 +69,22 @@ class NotesAdapter extends BaseAdapter {
         // Set title TextView to note title
         titleTextView.setText(noteTitle);
         // Remove all but 8 characters and set subtitle text to that
-        int numberOfCharacters = notesdb.getData(notesdb.getNoteIdFromTitle(noteTitle)).length();
+        int numberOfCharacters = notesdb.getData(notesdb.getNoteIdFromTitle(noteTitle)).replace(System.getProperty("line.separator"), " ").length();
+        // Based on string length, shorten string
+        String subtitle = (notesdb.getData(notesdb.getNoteIdFromTitle(noteTitle))).replace(System.getProperty("line.separator"), " ");
         if(numberOfCharacters > 50) {
-            subtitleTextView.setText((notesdb.getData(notesdb.getNoteIdFromTitle(noteTitle))).substring(0,50)+"..");
+            subtitle = subtitle.substring(0,50)+"..";
         } else if(numberOfCharacters > 30) {
-            subtitleTextView.setText((notesdb.getData(notesdb.getNoteIdFromTitle(noteTitle))).substring(0,30)+"..");
+            subtitle = subtitle.substring(0,30)+"..";
         } else if(numberOfCharacters > 15) {
-            subtitleTextView.setText((notesdb.getData(notesdb.getNoteIdFromTitle(noteTitle))).substring(0,15)+"..");
+            subtitle = subtitle.substring(0,15)+"..";
         } else if(numberOfCharacters < 15) {
-            subtitleTextView.setText((notesdb.getData(notesdb.getNoteIdFromTitle(noteTitle)))+"..");
+            if(numberOfCharacters != 0) {
+                subtitle += "..";
+            }
         }
+        // Set as text and remove line breaks (for display purposes)
+        subtitleTextView.setText(subtitle);
 
 
         deleteNoteButton.setOnClickListener(new View.OnClickListener() {

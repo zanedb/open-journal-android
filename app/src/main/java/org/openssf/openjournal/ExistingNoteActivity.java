@@ -6,6 +6,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -48,6 +49,10 @@ public class ExistingNoteActivity extends AppCompatActivity {
         // Initialize EditText's from layout
         title = (EditText) findViewById(R.id.existing_note_title_edittext);
         text = (EditText) findViewById(R.id.existing_note_edittext);
+
+        // Set Input types of note + title EditText
+        text.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES | InputType.TYPE_TEXT_FLAG_AUTO_CORRECT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+        title.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES | InputType.TYPE_TEXT_FLAG_AUTO_CORRECT);
 
         // Initialize "Last Modified" TextView from layout
         TextView lm = (TextView) findViewById(R.id.note_last_modified_textview);
