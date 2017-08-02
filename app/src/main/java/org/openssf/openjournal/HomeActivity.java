@@ -12,7 +12,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.io.File;
+import org.openssf.openjournal.utils.DBHelper;
+
 import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
@@ -21,6 +22,8 @@ public class HomeActivity extends AppCompatActivity {
     private ListView lv;
     // Define allNotes ArrayList
     public static ArrayList<String> allNotes;
+    // Define database helper class
+    DBHelper notesdb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,10 +31,13 @@ public class HomeActivity extends AppCompatActivity {
         // Set content view to activity_home layout
         setContentView(R.layout.activity_home);
 
+        // Initialize database helper class
+        notesdb = new DBHelper(this);
+
         // Initialize ListView from XML
         lv = (ListView) findViewById(R.id.list_view_home_activity);
         // Initialize ArrayList for data
-        allNotes = getAllNotes();
+        allNotes = notesdb.getAllNotes();
         // Check if empty ArrayList
         if(allNotes.size() == 0) {
             // If so, display text about it
@@ -53,6 +59,8 @@ public class HomeActivity extends AppCompatActivity {
                     Intent existingNote = new Intent(getApplicationContext(), ExistingNoteActivity.class);
                     // Pass note title to Activity
                     existingNote.putExtra("note_title", noteTitle);
+                    // Pass note ID to Activity
+                    existingNote.putExtra("note_id", notesdb.getNoteIdFromTitle(noteTitle));
                     // Start activity
                     startActivity(existingNote);
                 }
@@ -79,9 +87,9 @@ public class HomeActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
     }
 
-    /**
-     * TEMPORARILY DISABLE SEARCH
-     * Will be coming in later version..
+    /*
+      TEMPORARILY DISABLE SEARCH ICON
+      Will be coming in later version..
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate menu items in ActionBar/add items to ActionBar
@@ -102,6 +110,10 @@ public class HomeActivity extends AppCompatActivity {
         }
     } **/
 
+    /** UNUSED/DEPRECATED
+     *  getAllNotes() function
+     *  switched to SQLite
+     *  TODO to be removed
     public ArrayList<String> getAllNotes() {
         // Create ArrayList to store note titles in
         ArrayList notes = new ArrayList();
@@ -116,7 +128,8 @@ public class HomeActivity extends AppCompatActivity {
         }
         // Return the notes ArrayList
         return notes;
-    }
+     }
+     **/
 
     // Override onRestart() method to run refreshList()
     @Override

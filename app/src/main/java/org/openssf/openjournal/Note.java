@@ -5,7 +5,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.widget.Toast;
+
+import org.openssf.openjournal.utils.DBHelper;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -22,15 +25,17 @@ class Note {
     // Variables
     private String nameOfNote;
     private Context context;
+    // Define database helper class
+    private DBHelper notesdb;
 
     Note(Context contextTwo, String noteName) {
         context = contextTwo;
         nameOfNote = noteName;
+        // Initialize database helper class
+        notesdb = new DBHelper(context);
     }
 
     void delete(final boolean isSameActivity) {
-        // Locate file directory
-        final File dir = context.getFilesDir();
         // Create & initialize new AlertDialog Builder
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         // Set dialog title, message
@@ -39,13 +44,8 @@ class Note {
                 // Add "positive" button - discarding note
                 .setPositiveButton(context.getResources().getString(R.string.delete), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        // Append identifier for removing note
-                        nameOfNote += "_openJournalNote";
-                        // Create new file from name
-                        File file = new File(dir, nameOfNote);
-                        // Attempt to delete
-                        boolean deleted = file.delete();
-                        if(deleted) {
+                        int deleted = notesdb.deleteNote(notesdb.getNoteIdFromTitle(nameOfNote));
+                        if(deleted == 1) {
                             // WORKAROUND TO ListView refreshing - serves purpose of HomeActivity.onRestart() function
                             // Finish current activity
                             // TODO: Fix this workaround so it automatically updates ListView and doesn't use a workaround
@@ -80,6 +80,10 @@ class Note {
                 .show();
     }
 
+    /* UNUSED/DEPRECATED
+       readNote() function
+       Reads from local storage
+       Replaced with new SQLite storage
     String readNote(boolean isLastModified) {
         // Set noteText to error code in case try/catch fails
         String noteText = context.getResources().getString(R.string.ioexception);
@@ -117,4 +121,5 @@ class Note {
         // Return string
         return noteText;
     }
+     */
 }

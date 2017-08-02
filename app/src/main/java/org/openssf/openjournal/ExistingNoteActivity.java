@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.openssf.openjournal.utils.DBHelper;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -23,21 +25,25 @@ import java.util.Locale;
 
 public class ExistingNoteActivity extends AppCompatActivity {
 
-    // Define title String and retrieve it from Intent
+    // Define title & id variables to be retrieved from Intent
     String noteTitle;
+    int noteId;
     // Define note class
     Note note;
     // Define EditTexts
     EditText title;
     EditText text;
-    // Define FileOutputStream
-    FileOutputStream fos;
+    // Define database helper class
+    DBHelper notesdb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Set content view to activity_existing_note layout
         setContentView(R.layout.activity_existing_note);
+
+        // Initialize database helper class
+        notesdb = new DBHelper(this);
 
         // Initialize EditText's from layout
         title = (EditText) findViewById(R.id.existing_note_title_edittext);
@@ -48,16 +54,18 @@ public class ExistingNoteActivity extends AppCompatActivity {
 
         // Initialize noteTitle
         noteTitle = this.getIntent().getExtras().getString("note_title");
+        // Initialize noteId
+        noteId = this.getIntent().getExtras().getInt("note_id");
         // Initialize note
         note = new Note(this,noteTitle);
 
         // Set title EditText to noteTitle
         title.setText(noteTitle);
-        // Set text EditText to  note.readNote()
-        text.setText(note.readNote(false));
+        // Set text EditText to text of note
+        text.setText(notesdb.getData(noteId));
 
         // Set text of "last modified" TextView
-        lm.setText(String.format(getString(R.string.last_modified), note.readNote(true)));
+        lm.setText(String.format(getString(R.string.last_modified), notesdb.getTimestamp(noteId)));
 
         // Initialize Toolbar from layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_existing_note);
@@ -107,7 +115,7 @@ public class ExistingNoteActivity extends AppCompatActivity {
     }
 
     private void handleBackInput() {
-        if(title.getText().toString().equals(noteTitle) && text.getText().toString().equals(note.readNote(false))) {
+        if(title.getText().toString().equals(noteTitle) && text.getText().toString().equals(notesdb.getData(noteId))) {
             // Note is unchanged, exit activity
             finish();
         } else {
@@ -137,33 +145,23 @@ public class ExistingNoteActivity extends AppCompatActivity {
     }
 
     private void saveNote() {
-        if(title.getText().toString().equals(noteTitle) && text.getText().toString().equals(note.readNote(false))) {
+        if(title.getText().toString().equals(noteTitle) && text.getText().toString().equals(notesdb.getData(noteId))) {
             // Note is unchanged, exit activity
             finish();
         } else {
-            if (!title.getText().toString().equals(noteTitle)) {
-                if(title.getText().toString().matches("[a-zA-Z0-9!?. ]+")) {
-                    // Create new file to see if title already exists
-                    File filecheck = new File(this.getFilesDir(), title.getText().toString()+"_openJournalNote");
-                    if(filecheck.exists()) {
-                        // If it exists, warn users
-                        Toast.makeText(ExistingNoteActivity.this, getString(R.string.file_already_exists), Toast.LENGTH_SHORT).show();
-                    } else {
-                        saveUpdatedTitleNote();
-                    }
-                } else {
-                    unsupportedCharacters();
-                }
+            if(title.getText().toString().matches("[a-zA-Z0-9!?. ]+")) {
+                // Update note
+                notesdb.updateNote(noteId, title.getText().toString(), text.getText().toString(), new SimpleDateFormat("MM/dd/yyyy hh:mm aa", Locale.US).format(new Date()));
+                finish();
             } else {
-                // If title is not changed
-                if (!text.getText().toString().equals(note.readNote(false))) {
-                    // If only text is changed, save note under same title
-                    saveSameTitleNote();
-                }
+                unsupportedCharacters();
             }
         }
     }
 
+    /** UNUSED/DEPRECATED
+     *  Note update functions
+     *  Replaced by DBHelper class in SQLite
     void saveUpdatedTitleNote() {
         try {
             // Open FileOutputStream
@@ -183,6 +181,7 @@ public class ExistingNoteActivity extends AppCompatActivity {
             }
             fos.close();
             finish();
+            Note note = new Note(getApplicationContext(), "");
         } catch (FileNotFoundException e) {
             Toast.makeText(ExistingNoteActivity.this, getString(R.string.file_not_found_exception), Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
@@ -210,6 +209,7 @@ public class ExistingNoteActivity extends AppCompatActivity {
             Toast.makeText(ExistingNoteActivity.this, getString(R.string.ioexception), Toast.LENGTH_SHORT).show();
         }
     }
+    **/
 
     void unsupportedCharacters() {
         // Show dialog box explaining the error

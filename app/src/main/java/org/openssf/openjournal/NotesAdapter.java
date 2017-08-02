@@ -8,6 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import org.openssf.openjournal.utils.DBHelper;
+
 import java.util.ArrayList;
 
 /**
@@ -24,10 +26,16 @@ class NotesAdapter extends BaseAdapter {
     private LayoutInflater layoutInflater;
     private ArrayList<String> allNoteTitles;
 
+    // Define database helper class
+    private DBHelper notesdb;
+
     NotesAdapter(Context context, ArrayList<String> notes) {
         requiredContext = context;
         allNoteTitles = notes;
         layoutInflater = (LayoutInflater) requiredContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        // Initialize database helper class
+        notesdb = new DBHelper(requiredContext);
     }
 
     @Override
@@ -58,19 +66,18 @@ class NotesAdapter extends BaseAdapter {
 
         // Get title of note from ArrayList
         final String noteTitle = (String) getItem(position);
+        // Set title TextView to note title
         titleTextView.setText(noteTitle);
-        // Get text of note
-        Note note = new Note(requiredContext,noteTitle);
         // Remove all but 8 characters and set subtitle text to that
-        int numberOfCharacters = note.readNote(false).length();
+        int numberOfCharacters = notesdb.getData(notesdb.getNoteIdFromTitle(noteTitle)).length();
         if(numberOfCharacters > 50) {
-            subtitleTextView.setText(note.readNote(false).substring(0,50)+"..");
+            subtitleTextView.setText((notesdb.getData(notesdb.getNoteIdFromTitle(noteTitle))).substring(0,50)+"..");
         } else if(numberOfCharacters > 30) {
-            subtitleTextView.setText(note.readNote(false).substring(0,30)+"..");
+            subtitleTextView.setText((notesdb.getData(notesdb.getNoteIdFromTitle(noteTitle))).substring(0,30)+"..");
         } else if(numberOfCharacters > 15) {
-            subtitleTextView.setText(note.readNote(false).substring(0,15)+"..");
+            subtitleTextView.setText((notesdb.getData(notesdb.getNoteIdFromTitle(noteTitle))).substring(0,15)+"..");
         } else if(numberOfCharacters < 15) {
-            subtitleTextView.setText(note.readNote(false)+"..");
+            subtitleTextView.setText((notesdb.getData(notesdb.getNoteIdFromTitle(noteTitle)))+"..");
         }
 
 

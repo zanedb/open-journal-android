@@ -1,38 +1,34 @@
 package org.openssf.openjournal;
 
-import android.annotation.TargetApi;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringReader;
+import org.openssf.openjournal.utils.DBHelper;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
 public class AddNoteActivity extends AppCompatActivity {
 
+    // Define database helper class
+    DBHelper notesdb;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Set content view to activity_add_note layout
         setContentView(R.layout.activity_add_note);
+
+        // Initialize database helper class
+        notesdb = new DBHelper(this);
 
         // Initialize Toolbar from layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_add_note);
@@ -112,6 +108,10 @@ public class AddNoteActivity extends AppCompatActivity {
         }
     }
 
+    /** UNUSED/DEPRECATED
+     *  Old saveNote() Function
+     *  Saves note in local storage
+     *  Replaced by new SQLite saveNote() function
     private void saveNote() {
         // Get value of note & title
         EditText note = (EditText) findViewById(R.id.note_edittext);
@@ -156,6 +156,37 @@ public class AddNoteActivity extends AppCompatActivity {
                     } catch (IOException e) {
                         Toast.makeText(AddNoteActivity.this, getString(R.string.ioexception), Toast.LENGTH_SHORT).show();
                     }
+                }
+            } else {
+                // Otherwise, show dialog box explaining the error
+                unsupportedCharacters();
+            }
+        }
+    }
+    **/
+
+    private void saveNote() {
+        // Get value of note & title
+        EditText note = (EditText) findViewById(R.id.note_edittext);
+        EditText note_title = (EditText) findViewById(R.id.note_title_edittext);
+
+        // Check if title is empty
+        if(note_title.getText().toString().equals("")) {
+            Toast.makeText(AddNoteActivity.this, getString(R.string.empty_text), Toast.LENGTH_SHORT).show();
+        } else {
+            // Check if title contains characters other than a-z A-Z 0-9 ?!
+            // If not, allow them to save file
+            if(note_title.getText().toString().matches("[a-zA-Z0-9!?. ]+")) {
+                // Check if note exists
+                boolean filecheck = notesdb.doesNoteExist(note_title.getText().toString());
+                if(filecheck) {
+                    // If it exists, warn users
+                    Toast.makeText(AddNoteActivity.this, getString(R.string.file_already_exists), Toast.LENGTH_SHORT).show();
+                } else {
+                    // Otherwise, create it
+                    notesdb.insertNote(note_title.getText().toString(), note.getText().toString(), (new SimpleDateFormat("MM/dd/yyyy hh:mm aa", Locale.US).format(new Date())));
+                    // End activity
+                    finish();
                 }
             } else {
                 // Otherwise, show dialog box explaining the error
