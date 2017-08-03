@@ -7,6 +7,7 @@ A simple and easy notes platform on Android. Coming soon to other platforms. New
 ## To Do/Planned Features (for both versions)
 - [x] Basic UI based on [the original](https://github.com/openssf/open-journal)
 - [x] A simple notes system
+- [x] Bugfixes and improvements
 - [ ] Advanced features such as searching notes and selecting multiple notes for deletion at once
 - [ ] Even more user-requested features from issues and requests! (submit an issue for a request)
 - [ ] Powerful Encryption
