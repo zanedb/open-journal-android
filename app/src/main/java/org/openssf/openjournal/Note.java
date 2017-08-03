@@ -31,11 +31,11 @@ class Note {
     Note(Context contextTwo, String noteName) {
         context = contextTwo;
         nameOfNote = noteName;
-        // Initialize database helper class
-        notesdb = new DBHelper(context);
     }
 
     void delete(final boolean isSameActivity) {
+        // Initialize database helper class
+        notesdb = new DBHelper(context);
         // Create & initialize new AlertDialog Builder
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         // Set dialog title, message
@@ -46,6 +46,8 @@ class Note {
                     public void onClick(DialogInterface dialog, int which) {
                         int deleted = notesdb.deleteNote(notesdb.getNoteIdFromTitle(nameOfNote));
                         if(deleted == 1) {
+                            // Close DBHelper
+                            notesdb.close();
                             // WORKAROUND TO ListView refreshing - serves purpose of HomeActivity.onRestart() function
                             // Finish current activity
                             // TODO: Fix this workaround so it automatically updates ListView and doesn't use a workaround
@@ -67,6 +69,8 @@ class Note {
                         } else {
                             // If unsuccessful, tell user
                             Toast.makeText(context, context.getResources().getString(R.string.note_not_deleted), Toast.LENGTH_SHORT).show();
+                            // Close notesdb
+                            notesdb.close();
                         }
                     }
                 })

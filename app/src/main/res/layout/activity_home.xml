@@ -21,15 +21,11 @@
             android:background="?attr/colorPrimary">
         </android.support.v7.widget.Toolbar>
 
-        <ListView
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view_home_activity"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/list_view_home_activity"
-            android:visibility="invisible"
-            android:descendantFocusability="afterDescendants">
-            <!-- Content will be added dynamically. Nothing is needed here. -->
-
-        </ListView>
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"/>
     </LinearLayout>
 
     <TextView

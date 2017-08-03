@@ -1,7 +1,6 @@
 package org.openssf.openjournal;
 
 import android.content.DialogInterface;
-import android.renderscript.ScriptGroup;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

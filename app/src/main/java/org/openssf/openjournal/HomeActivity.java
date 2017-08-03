@@ -4,26 +4,30 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import org.openssf.openjournal.utils.DBHelper;
+import org.openssf.openjournal.utils.RecyclerItemClickListener;
 
 import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
 
-    // Define ListView
-    private ListView lv;
+    // Define RecyclerView
+    private RecyclerView rv;
+    // Define LinearLayoutManager
+    private LinearLayoutManager llm;
     // Define allNotes ArrayList
     public static ArrayList<String> allNotes;
     // Define database helper class
     DBHelper notesdb;
+    // Define NotesAdapter
+    NotesAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +38,12 @@ public class HomeActivity extends AppCompatActivity {
         // Initialize database helper class
         notesdb = new DBHelper(this);
 
-        // Initialize ListView from XML
-        lv = (ListView) findViewById(R.id.list_view_home_activity);
+        // Initialize RecyclerView from XML
+        rv = (RecyclerView) findViewById(R.id.recycler_view_home_activity);
+        // Initialize LinearLayoutManager
+        llm = new LinearLayoutManager(this);
+        // Set RecyclerView LinearLayoutManager to llm
+        rv.setLayoutManager(llm);
         // Initialize ArrayList for data
         allNotes = notesdb.getAllNotes();
         // Check if empty ArrayList
@@ -46,28 +54,37 @@ public class HomeActivity extends AppCompatActivity {
         } else {
             // Otherwise, display list items
             // Create new adapter with note titles
-            NotesAdapter adapter = new NotesAdapter(this, allNotes);
-            // Set ListView adapter
-            lv.setAdapter(adapter);
+            adapter = new NotesAdapter(this, allNotes);
+            // Set RecyclerView adapter
+            rv.setAdapter(adapter);
+            // Add divider between rows
+            rv.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
             // Add onClickListener
-            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    // Get title of note
-                    String noteTitle = allNotes.get(position);
-                    // Create new intent for opening ExistingNoteActivity
-                    Intent existingNote = new Intent(getApplicationContext(), ExistingNoteActivity.class);
-                    // Pass note title to Activity
-                    existingNote.putExtra("note_title", noteTitle);
-                    // Pass note ID to Activity
-                    existingNote.putExtra("note_id", notesdb.getNoteIdFromTitle(noteTitle));
-                    // Start activity
-                    startActivity(existingNote);
-                }
+            rv.addOnItemTouchListener(
+                    new RecyclerItemClickListener(getApplicationContext(), rv, new RecyclerItemClickListener.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, int position) {
+                            // Row click
+                            // Get title of note
+                            String noteTitle = allNotes.get(position);
+                            // Create new intent for opening ExistingNoteActivity
+                            Intent existingNote = new Intent(getApplicationContext(), ExistingNoteActivity.class);
+                            // Pass note title to Activity
+                            existingNote.putExtra("note_title", noteTitle);
+                            // Pass note ID to Activity
+                            existingNote.putExtra("note_id", notesdb.getNoteIdFromTitle(noteTitle));
+                            // Start activity
+                            startActivity(existingNote);
+                        }
 
-            });
-            // Set ListView to visible
-            lv.setVisibility(View.VISIBLE);
+                        @Override
+                        public void onLongItemClick(View view, int position) {
+
+                        }
+                    })
+            );
+            // Set RecyclerView to visible
+            rv.setVisibility(View.VISIBLE);
         }
 
         // Initialize FAB from layout for adding onClickListener
