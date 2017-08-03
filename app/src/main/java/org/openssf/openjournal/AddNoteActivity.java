@@ -1,28 +1,45 @@
 package org.openssf.openjournal;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import org.openssf.openjournal.utils.DBHelper;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class AddNoteActivity extends AppCompatActivity {
+
+    // Define database helper class
+    DBHelper notesdb;
+    // Define notes
+    EditText note;
+    EditText note_title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Set content view to activity_add_note layout
         setContentView(R.layout.activity_add_note);
+
+        // Initialize notes
+        note = (EditText) findViewById(R.id.note_edittext);
+        note_title = (EditText) findViewById(R.id.note_title_edittext);
+        // Set Input types of note + title EditText
+        note.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES | InputType.TYPE_TEXT_FLAG_AUTO_CORRECT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+        note_title.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES | InputType.TYPE_TEXT_FLAG_AUTO_CORRECT);
+
+        // Initialize database helper class
+        notesdb = new DBHelper(this);
 
         // Initialize Toolbar from layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_add_note);
@@ -104,8 +121,6 @@ public class AddNoteActivity extends AppCompatActivity {
 
     private void saveNote() {
         // Get value of note & title
-        EditText note = (EditText) findViewById(R.id.note_edittext);
-        EditText note_title = (EditText) findViewById(R.id.note_title_edittext);
 
         // Check if title is empty
         if(note_title.getText().toString().equals("")) {
@@ -114,45 +129,37 @@ public class AddNoteActivity extends AppCompatActivity {
             // Check if title contains characters other than a-z A-Z 0-9 ?!
             // If not, allow them to save file
             if(note_title.getText().toString().matches("[a-zA-Z0-9!?. ]+")) {
-                // Create FileOutputStream for writing file
-                FileOutputStream fos;
-                // Create new file to see if title already exists
-                File filecheck = new File(this.getFilesDir(), note_title.getText().toString()+"_openJournalNote");
-                if(filecheck.exists()) {
+                // Check if note exists
+                boolean filecheck = notesdb.doesNoteExist(note_title.getText().toString());
+                if(filecheck) {
                     // If it exists, warn users
                     Toast.makeText(AddNoteActivity.this, getString(R.string.file_already_exists), Toast.LENGTH_SHORT).show();
                 } else {
                     // Otherwise, create it
-                    try {
-                        // Open FileOutputStream
-                        fos = openFileOutput(note_title.getText().toString()+"_openJournalNote", Context.MODE_PRIVATE);
-                        fos.write(note.getText().toString().getBytes());
-                        // Tell user the note was saved
-                        Toast.makeText(AddNoteActivity.this, getString(R.string.saving_note), Toast.LENGTH_SHORT).show();
-                        fos.close();
-                        finish();
-                    } catch (FileNotFoundException e) {
-                        Toast.makeText(AddNoteActivity.this, getString(R.string.file_not_found_exception), Toast.LENGTH_SHORT).show();
-                    } catch (IOException e) {
-                        Toast.makeText(AddNoteActivity.this, getString(R.string.ioexception), Toast.LENGTH_SHORT).show();
-                    }
+                    notesdb.insertNote(note_title.getText().toString(), note.getText().toString(), (new SimpleDateFormat("MM/dd/yyyy hh:mm aa", Locale.US).format(new Date())));
+                    // End activity
+                    finish();
                 }
             } else {
                 // Otherwise, show dialog box explaining the error
-                // Create & initialize new AlertDialog Builder
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                // Set dialog title, message
-                builder.setTitle(getString(R.string.unsupported_characters))
-                        .setMessage(getString(R.string.unsupported_characters_long))
-                        // Add okay button
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // Do nothing, just an alert message
-                            }
-                        })
-                        // Show dialog box
-                        .show();
+                unsupportedCharacters();
             }
         }
+    }
+
+    void unsupportedCharacters() {
+        // Create & initialize new AlertDialog Builder
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        // Set dialog title, message
+        builder.setTitle(getString(R.string.unsupported_characters))
+                .setMessage(getString(R.string.unsupported_characters_long))
+                // Add okay button
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do nothing, just an alert message
+                    }
+                })
+                // Show dialog box
+                .show();
     }
 }

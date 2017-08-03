@@ -1,25 +1,33 @@
 package org.openssf.openjournal;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import java.io.File;
+import org.openssf.openjournal.utils.DBHelper;
+import org.openssf.openjournal.utils.RecyclerItemClickListener;
+
 import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
 
-    // Define ListView
-    private ListView lv;
+    // Define RecyclerView
+    private RecyclerView rv;
+    // Define LinearLayoutManager
+    private LinearLayoutManager llm;
     // Define allNotes ArrayList
     public static ArrayList<String> allNotes;
+    // Define database helper class
+    DBHelper notesdb;
+    // Define NotesAdapter
+    NotesAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,10 +35,17 @@ public class HomeActivity extends AppCompatActivity {
         // Set content view to activity_home layout
         setContentView(R.layout.activity_home);
 
-        // Initialize ListView from XML
-        lv = (ListView) findViewById(R.id.list_view_home_activity);
+        // Initialize database helper class
+        notesdb = new DBHelper(this);
+
+        // Initialize RecyclerView from XML
+        rv = (RecyclerView) findViewById(R.id.recycler_view_home_activity);
+        // Initialize LinearLayoutManager
+        llm = new LinearLayoutManager(this);
+        // Set RecyclerView LinearLayoutManager to llm
+        rv.setLayoutManager(llm);
         // Initialize ArrayList for data
-        allNotes = getAllNotes(getApplicationContext());
+        allNotes = notesdb.getAllNotes();
         // Check if empty ArrayList
         if(allNotes.size() == 0) {
             // If so, display text about it
@@ -39,27 +54,37 @@ public class HomeActivity extends AppCompatActivity {
         } else {
             // Otherwise, display list items
             // Create new adapter with note titles
-            //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, allNotes);
-            NotesAdapter adapter = new NotesAdapter(this, allNotes);
-            // Set ListView adapter
-            lv.setAdapter(adapter);
+            adapter = new NotesAdapter(this, allNotes);
+            // Set RecyclerView adapter
+            rv.setAdapter(adapter);
+            // Add divider between rows
+            rv.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
             // Add onClickListener
-            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    // Get title of note
-                    String noteTitle = allNotes.get(position);
-                    // Create new intent for opening ExistingNoteActivity
-                    Intent existingNote = new Intent(getApplicationContext(), ExistingNoteActivity.class);
-                    // Pass note title to Activity
-                    existingNote.putExtra("note_title", noteTitle);
-                    // Start activity
-                    startActivity(existingNote);
-                }
+            rv.addOnItemTouchListener(
+                    new RecyclerItemClickListener(getApplicationContext(), rv, new RecyclerItemClickListener.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, int position) {
+                            // Row click
+                            // Get title of note
+                            String noteTitle = allNotes.get(position);
+                            // Create new intent for opening ExistingNoteActivity
+                            Intent existingNote = new Intent(getApplicationContext(), ExistingNoteActivity.class);
+                            // Pass note title to Activity
+                            existingNote.putExtra("note_title", noteTitle);
+                            // Pass note ID to Activity
+                            existingNote.putExtra("note_id", notesdb.getNoteIdFromTitle(noteTitle));
+                            // Start activity
+                            startActivity(existingNote);
+                        }
 
-            });
-            // Set ListView to visible
-            lv.setVisibility(View.VISIBLE);
+                        @Override
+                        public void onLongItemClick(View view, int position) {
+
+                        }
+                    })
+            );
+            // Set RecyclerView to visible
+            rv.setVisibility(View.VISIBLE);
         }
 
         // Initialize FAB from layout for adding onClickListener
@@ -72,31 +97,47 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(addnoteintent);
             }
         });
+
+        // Initialize Toolbar from layout
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_home_activity);
+        // Set as Action Bar
+        setSupportActionBar(toolbar);
     }
 
-    public ArrayList<String> getAllNotes(Context context) {
-        // Create ArrayList to store note titles in
-        ArrayList notes = new ArrayList();
-        // Create File array of filenames
-        File[] filenames = this.getFilesDir().listFiles();
-        // If the File's name is a note, then add it to the notes ArrayList
-        int fnLength = filenames.length;
-        for(int i=0;i<fnLength;i++) {
-            if(filenames[i].getName().endsWith("_openJournalNote")) {
-                // Add to ArrayList and remove _openJournalNote identifier from display
-                notes.add(filenames[i].getName().substring(0, filenames[i].getName().length() - 16));
-            }
-        }
-        // Return the notes ArrayList
-        return notes;
+    /*
+      TEMPORARILY DISABLE SEARCH ICON
+      Will be coming in later version..
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate menu items in ActionBar/add items to ActionBar
+        getMenuInflater().inflate(R.menu.menu_home_activity_toolbar, menu);
+        return true;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle ClickEvents on ActionBar/Toolbar items
+        switch (item.getItemId()) {
+            // Checkmark ClickEvent for saving note
+            case R.id.search_icon:
+                searchIcon();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    } **/
 
     // Override onRestart() method to run refreshList()
     @Override
     public void onRestart() {
         super.onRestart();
         finish();
-        startActivity(getIntent());
-        // TODO 7: Actually update ListView instead of restarting Activity
+        overridePendingTransition(0, 0);
+        startActivity(getIntent().addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+        // TODO: Actually update ListView instead of restarting Activity
+    }
+
+    public void searchIcon() {
+        // TODO: Add code here to search notes
     }
 }

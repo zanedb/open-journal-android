@@ -1,86 +1,89 @@
 package org.openssf.openjournal;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import org.openssf.openjournal.utils.DBHelper;
 
 import java.util.ArrayList;
 
 /**
  * NotesAdapter Class
- * Custom Adapter class for ListView in HomeActivity.java
+ * Custom Adapter class for RecyclerView in HomeActivity.java
  * Used for listing note titles and adding icons, etc.
- * @version 1.0
+ * @version 2.0
  * @author github.com/zanedb
  */
 
-class NotesAdapter extends BaseAdapter {
+class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHolder> {
 
     private Context requiredContext;
-    private LayoutInflater layoutInflater;
     private ArrayList<String> allNoteTitles;
+
+    // Define database helper class
+    private DBHelper notesdb;
 
     NotesAdapter(Context context, ArrayList<String> notes) {
         requiredContext = context;
         allNoteTitles = notes;
-        layoutInflater = (LayoutInflater) requiredContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        // Initialize database helper class
+        notesdb = new DBHelper(requiredContext);
     }
 
-    @Override
-    public int getCount() {
-        return allNoteTitles.size();
-    }
+    class NotesViewHolder extends RecyclerView.ViewHolder {
+        TextView titleTextView, subtitleTextView;
+        ImageButton deleteNoteButton;
 
-    @Override
-    public Object getItem(int position) {
-        return allNoteTitles.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        // Set layout and inflate view
-        View rowView = layoutInflater.inflate(R.layout.notes_list, parent, false);
-        // Initialize title TextView from layout
-        TextView titleTextView = (TextView) rowView.findViewById(R.id.notes_list_title);
-        // Initialize subtitle TextView from layout
-        TextView subtitleTextView = (TextView) rowView.findViewById(R.id.notes_list_subtitle);
-        // Initialize note deletion icon from layout
-        ImageButton deleteNoteButton = (ImageButton) rowView.findViewById(R.id.notes_list_delete_button);
-
-        // Get title of note from ArrayList
-        final String noteTitle = (String) getItem(position);
-        titleTextView.setText(noteTitle);
-        // Get text of note
-        Note note = new Note(requiredContext,noteTitle);
-        // Remove all but 8 characters and set subtitle text to that
-        int numberOfCharacters = note.readNote().length();
-        if(numberOfCharacters > 50) {
-            subtitleTextView.setText(note.readNote().substring(0,50)+"..");
-        } else if(numberOfCharacters > 30) {
-            subtitleTextView.setText(note.readNote().substring(0,30)+"..");
-        } else if(numberOfCharacters > 15) {
-            subtitleTextView.setText(note.readNote().substring(0,15)+"..");
-        } else if(numberOfCharacters < 15) {
-            subtitleTextView.setText(note.readNote()+"..");
+        NotesViewHolder(View view) {
+            super(view);
+            // Initialize title TextView from layout
+            titleTextView = (TextView) view.findViewById(R.id.notes_list_title);
+            // Initialize subtitle TextView from layout
+            subtitleTextView = (TextView) view.findViewById(R.id.notes_list_subtitle);
         }
+    }
 
+    @Override
+    public NotesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.notes_list, parent, false);
 
-        deleteNoteButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                Note note = new Note(requiredContext,noteTitle);
-                note.delete();
+        return new NotesViewHolder(itemView);
+    }
+
+    @Override
+    public void onBindViewHolder(NotesAdapter.NotesViewHolder holder, int position) {
+        // Get note title
+        final String noteTitle = allNoteTitles.get(position);
+        // Set note title to display
+        holder.titleTextView.setText(noteTitle);
+        // Get number of characters of text
+        int numberOfCharacters = notesdb.getData(notesdb.getNoteIdFromTitle(noteTitle)).replace(System.getProperty("line.separator"), " ").length();
+        // Based on string length, shorten string
+        String subtitle = (notesdb.getData(notesdb.getNoteIdFromTitle(noteTitle))).replace(System.getProperty("line.separator"), " ");
+        if(numberOfCharacters > 90) {
+            subtitle = subtitle.substring(0,100)+"..";
+        } else if(numberOfCharacters > 60) {
+            subtitle = subtitle.substring(0,60)+"..";
+        } else if(numberOfCharacters > 30) {
+            subtitle = subtitle.substring(0,30)+"..";
+        } else if(numberOfCharacters < 30) {
+            if(numberOfCharacters != 0) {
+                subtitle += "..";
             }
-        });
+        }
+        // Set subtitle TextView to shortened string
+        holder.subtitleTextView.setText(subtitle);
+    }
 
-        return rowView;
+    @Override
+    public int getItemCount() {
+        return allNoteTitles.size();
     }
 }
