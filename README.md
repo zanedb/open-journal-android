@@ -8,12 +8,14 @@ A simple and easy notes platform on Android. Coming soon to other platforms. New
 - [x] Basic UI based on [the original](https://github.com/openssf/open-journal)
 - [x] A simple notes system
 - [x] Bugfixes and improvements
+- [ ] More performance improvements
 - [ ] Advanced features such as searching notes and selecting multiple notes for deletion at once
 - [ ] Even more user-requested features from issues and requests! (submit an issue for a request)
 - [ ] Powerful Encryption
 - [ ] Password/PIN/Fingerprint Note Locking
 - [ ] Notes Synchronization between Platforms
 - [ ] Sharing Notes between Users/P2P Notetaking
+- [ ] Account/Note Accessibility After Long Time (Emergency Account Access)
 ## APKs
 Grab the latest APKs [here](https://github.com/zanedb/open-journal-android/releases), or on the [Play Store](https://play.google.com/store/apps/details?id=org.openssf.openjournal).
 ## Screenshots
