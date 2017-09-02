@@ -3,7 +3,6 @@ package org.openssf.openjournal;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
@@ -26,7 +25,7 @@ class Note {
         nameOfNote = noteName;
     }
 
-    void delete(final boolean isSameActivity) {
+    void delete() {
         // Initialize database helper class
         notesdb = new DBHelper(context);
         // Create & initialize new AlertDialog Builder
@@ -41,24 +40,10 @@ class Note {
                         if(deleted == 1) {
                             // Close DBHelper
                             notesdb.close();
-                            // WORKAROUND TO ListView refreshing - serves purpose of HomeActivity.onRestart() function
                             // Finish current activity
-                            // TODO: Fix this workaround so it automatically updates ListView and doesn't use a workaround
-                            if(isSameActivity) {
-                                // Finish current activity
-                                ((Activity)context).finish();
-                                // Override transition
-                                ((Activity)context).overridePendingTransition(0, 0);
-                                // Start new Activity
-                                context.startActivity(new Intent(context, HomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
-                                // If successful, tell user
-                                Toast.makeText(context, context.getResources().getString(R.string.note_deleted), Toast.LENGTH_SHORT).show();
-                            } else {
-                                // Finish current activity
-                                ((Activity)context).finish();
-                                // If successful, tell user
-                                Toast.makeText(context, context.getResources().getString(R.string.note_deleted), Toast.LENGTH_SHORT).show();
-                            }
+                            ((Activity)context).finish();
+                            // If successful, tell user
+                            Toast.makeText(context, context.getResources().getString(R.string.note_deleted), Toast.LENGTH_SHORT).show();
                         } else {
                             // If unsuccessful, tell user
                             Toast.makeText(context, context.getResources().getString(R.string.note_not_deleted), Toast.LENGTH_SHORT).show();

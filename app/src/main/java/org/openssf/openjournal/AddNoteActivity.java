@@ -189,4 +189,13 @@ public class AddNoteActivity extends AppCompatActivity {
         // Close keyboard
         imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
     }
+
+    /*
+    @Override
+    public void finish() {
+        Intent returnIntent = new Intent();
+        setResult(RESULT_OK);
+        super.finish();
+    }
+    */
 }
