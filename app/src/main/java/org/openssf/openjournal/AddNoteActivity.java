@@ -3,6 +3,7 @@ package org.openssf.openjournal;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -56,6 +57,19 @@ public class AddNoteActivity extends AppCompatActivity {
 
         // Open keyboard
         showKeyboard(note_title);
+
+        // SHARE MENU CODE:
+
+        // Get intent
+        Intent intent = getIntent();
+        // Get extras
+        Bundle extras = intent.getExtras();
+        // Get action
+        String action = intent.getAction();
+        // If coming from share menu, pre-fill note EditText with shared data
+        if (Intent.ACTION_SEND.equals(action)) {
+            note.setText(extras.getString(Intent.EXTRA_TEXT));
+        }
     }
 
     @Override

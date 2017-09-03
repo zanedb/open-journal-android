@@ -24,7 +24,14 @@
             android:theme="@style/NoToolbarTheme"/>
         <activity
             android:name=".AddNoteActivity"
-            android:theme="@style/NoToolbarTheme" />
+            android:theme="@style/NoToolbarTheme" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEND"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="text/plain"/>
+                <data android:mimeType="text/*"/>
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ExistingNoteActivity"
             android:theme="@style/NoToolbarTheme"/>
