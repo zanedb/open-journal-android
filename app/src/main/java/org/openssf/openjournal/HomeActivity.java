@@ -127,14 +127,16 @@ public class HomeActivity extends AppCompatActivity {
         }
     } **/
 
-    // Override onRestart() method to run refreshList()
+    // When re-opening the activity, refresh list of notes
     @Override
     public void onRestart() {
         super.onRestart();
-        finish();
-        overridePendingTransition(0, 0);
-        startActivity(getIntent().addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
-        // TODO: Actually update ListView instead of restarting Activity
+        // Fetch updates notes list
+        allNotes = notesdb.getAllNotes();
+        // Define new adapter with new notes list
+        adapter = new NotesAdapter(this, allNotes);
+        // Swap existing adapter to new adapter
+        rv.swapAdapter(adapter, true);
     }
 
     public void searchIcon() {

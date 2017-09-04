@@ -92,7 +92,7 @@ public class ExistingNoteActivity extends AppCompatActivity {
                 saveNote();
                 return true;
             case R.id.delete_icon_existing_note_toolbar:
-                note.delete(false);
+                note.delete();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

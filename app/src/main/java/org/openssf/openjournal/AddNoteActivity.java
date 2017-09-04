@@ -1,6 +1,9 @@
 package org.openssf.openjournal;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +11,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -49,6 +54,22 @@ public class AddNoteActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // Change ActionBar title to Add Note
         getSupportActionBar().setTitle(getString(R.string.add_note));
+
+        // Open keyboard
+        showKeyboard(note_title);
+
+        // SHARE MENU CODE:
+
+        // Get intent
+        Intent intent = getIntent();
+        // Get extras
+        Bundle extras = intent.getExtras();
+        // Get action
+        String action = intent.getAction();
+        // If coming from share menu, pre-fill note EditText with shared data
+        if (Intent.ACTION_SEND.equals(action)) {
+            note.setText(extras.getString(Intent.EXTRA_TEXT));
+        }
     }
 
     @Override
@@ -91,7 +112,8 @@ public class AddNoteActivity extends AppCompatActivity {
         if(note.getText().toString().equals("") && note_title.getText().toString().equals("")) {
             // Send message informing user note is being discarded
             Toast.makeText(AddNoteActivity.this, getString(R.string.discarding), Toast.LENGTH_SHORT).show();
-            // Exit activity
+            // Hide keyboard + exit activity
+            hideKeyboard();
             finish();
         } else {
             // Create & initialize new AlertDialog Builder
@@ -104,7 +126,8 @@ public class AddNoteActivity extends AppCompatActivity {
                         public void onClick(DialogInterface dialog, int which) {
                             // Send Toast message telling user the note is being discarded
                             Toast.makeText(AddNoteActivity.this, getString(R.string.discarding), Toast.LENGTH_SHORT).show();
-                            // Exit Activity & return to HomeActivity
+                            // Exit Activity & return to HomeActivity, while closing keyboard
+                            hideKeyboard();
                             finish();
                         }
                     })
@@ -137,7 +160,8 @@ public class AddNoteActivity extends AppCompatActivity {
                 } else {
                     // Otherwise, create it
                     notesdb.insertNote(note_title.getText().toString(), note.getText().toString(), (new SimpleDateFormat("MM/dd/yyyy hh:mm aa", Locale.US).format(new Date())));
-                    // End activity
+                    // Close keyboard and exit activity
+                    hideKeyboard();
                     finish();
                 }
             } else {
@@ -162,4 +186,30 @@ public class AddNoteActivity extends AppCompatActivity {
                 // Show dialog box
                 .show();
     }
+
+    void showKeyboard(View view) {
+        // Function to open keyboard to specified view
+        // Create new IMM for manipulating keyboard
+        final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        // Enable keyboard
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+        // Open to specified view
+        imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+    }
+
+    void hideKeyboard() {
+        // Create IMM to close keyboard
+        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        // Close keyboard
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+    }
+
+    /*
+    @Override
+    public void finish() {
+        Intent returnIntent = new Intent();
+        setResult(RESULT_OK);
+        super.finish();
+    }
+    */
 }

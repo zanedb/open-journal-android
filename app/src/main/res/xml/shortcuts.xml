@@ -1,0 +1,14 @@
+<shortcuts xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:targetApi="n_mr1">
+    <shortcut
+        android:shortcutId="addnote_shortcut"
+        android:enabled="true"
+        android:icon="@drawable/ic_create_black_24dp"
+        android:shortcutShortLabel="@string/add_note">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="org.openssf.openjournal"
+            android:targetClass="org.openssf.openjournal.AddNoteActivity" />
+    </shortcut>
+</shortcuts>
