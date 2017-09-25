@@ -20,5 +20,7 @@ A simple and easy notes platform on Android. Coming soon to other platforms. New
 Grab the latest APKs [here](https://github.com/zanedb/open-journal-android/releases), or on the [Play Store](https://play.google.com/store/apps/details?id=org.openssf.openjournal).
 ## Screenshots
 
+|:-:|:-:|
 | ![First](https://www.dropbox.com/s/4uqbraft7y9bruv/screenshot-1-edited.png?dl=1) | ![Sec](https://www.dropbox.com/s/11at7hqc21fcbsn/screenshot-2-edited.png?dl=1) |
+|:-:|:-:|
 | ![Third](https://www.dropbox.com/s/vrxq5fnvcbai0kt/screenshot-3-edited.png?dl=1) | ![Fourth](https://www.dropbox.com/s/xu5w37tkrwz93dm/screenshot-4-edited.png?dl=1) |
