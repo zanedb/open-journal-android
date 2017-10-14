@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.text.format.DateFormat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -159,7 +160,11 @@ public class AddNoteActivity extends AppCompatActivity {
                     Toast.makeText(AddNoteActivity.this, getString(R.string.file_already_exists), Toast.LENGTH_SHORT).show();
                 } else {
                     // Otherwise, create it
-                    notesdb.insertNote(note_title.getText().toString(), note.getText().toString(), (new SimpleDateFormat("MM/dd/yyyy hh:mm aa", Locale.US).format(new Date())));
+                    if(DateFormat.is24HourFormat(this)) {
+                        notesdb.insertNote(note_title.getText().toString(), note.getText().toString(), (new SimpleDateFormat("MM/dd/yyyy HH:mm", Locale.US).format(new Date())));
+                    } else {
+                        notesdb.insertNote(note_title.getText().toString(), note.getText().toString(), (new SimpleDateFormat("MM/dd/yyyy hh:mm aa", Locale.US).format(new Date())));
+                    }
                     // Close keyboard and exit activity
                     hideKeyboard();
                     finish();

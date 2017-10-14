@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.text.format.DateFormat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -150,7 +151,11 @@ public class ExistingNoteActivity extends AppCompatActivity {
         } else {
             if(title.getText().toString().matches("[a-zA-Z0-9!?. ]+")) {
                 // Update note
-                notesdb.updateNote(noteId, title.getText().toString(), text.getText().toString(), new SimpleDateFormat("MM/dd/yyyy hh:mm aa", Locale.US).format(new Date()));
+                if(DateFormat.is24HourFormat(this)) {
+                    notesdb.updateNote(noteId, title.getText().toString(), text.getText().toString(), new SimpleDateFormat("MM/dd/yyyy HH:mm", Locale.US).format(new Date()));
+                } else {
+                    notesdb.updateNote(noteId, title.getText().toString(), text.getText().toString(), new SimpleDateFormat("MM/dd/yyyy hh:mm aa", Locale.US).format(new Date()));
+                }
                 finish();
             } else {
                 unsupportedCharacters();
