@@ -22,6 +22,6 @@ Grab the latest APKs [here](https://github.com/zanedb/open-journal-android/relea
 
 | One | Two |
 |:-:|:-:|
-| ![First](https://www.dropbox.com/s/4uqbraft7y9bruv/screenshot-1-edited.png?dl=1) | ![Sec](https://www.dropbox.com/s/11at7hqc21fcbsn/screenshot-2-edited.png) |
+| ![First](https://raw.githubusercontent.com/openssf/open-journal-android/master/extra/screenshot-1-edited.png) | ![Sec](https://raw.githubusercontent.com/openssf/open-journal-android/master/extra/screenshot-2-edited.png) |
 | Three | Four |
-| ![Third](https://www.dropbox.com/s/vrxq5fnvcbai0kt/screenshot-3-edited.png) | ![Fourth](https://www.dropbox.com/s/xu5w37tkrwz93dm/screenshot-4-edited.png) |
+| ![Third](https://raw.githubusercontent.com/openssf/open-journal-android/master/extra/screenshot-3-edited.png) | ![Fourth](https://raw.githubusercontent.com/openssf/open-journal-android/master/extra/screenshot-4-edited.png) |
