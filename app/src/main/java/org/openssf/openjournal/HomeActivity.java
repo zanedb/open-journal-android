@@ -28,6 +28,8 @@ public class HomeActivity extends AppCompatActivity {
     DBHelper notesdb;
     // Define NotesAdapter
     NotesAdapter adapter;
+    // Define DividerItemDecoration
+    DividerItemDecoration did;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +122,9 @@ public class HomeActivity extends AppCompatActivity {
         if(allNotes.size() == 0) {
             TextView noNotes = (TextView) findViewById(R.id.no_notes_textview);
             noNotes.setVisibility(View.VISIBLE);
+
+            // Remove decoration
+            rv.removeItemDecoration(did);
         }
     }
 
@@ -128,8 +133,10 @@ public class HomeActivity extends AppCompatActivity {
         adapter = new NotesAdapter(this, allNotes);
         // Set RecyclerView adapter
         rv.setAdapter(adapter);
+        // Define ItemDecoration
+        did = new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
         // Add divider between rows
-        rv.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        rv.addItemDecoration(did);
         // Add onClickListener
         rv.addOnItemTouchListener(
                 new RecyclerItemClickListener(getApplicationContext(), rv, new RecyclerItemClickListener.OnItemClickListener() {
