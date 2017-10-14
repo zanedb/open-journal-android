@@ -62,8 +62,14 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery( "select "+NOTES_COLUMN_TEXT+" from "+NOTES_TABLE_NAME+" where "+NOTES_COLUMN_ID+"="+id+"", null);
         if(res.moveToFirst()) {
-            return res.getString(0);
+            // Set variable to string
+            String notetext = res.getString(0);
+            // Close cursor
+            res.close();
+            // Return variable
+            return notetext;
         } else {
+            res.close();
             return mContext.getResources().getString(R.string.general_error);
         }
     }
@@ -109,7 +115,9 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery( "select "+NOTES_COLUMN_ID+" from "+NOTES_TABLE_NAME+" where "+NOTES_COLUMN_TITLE+"='"+title+"'", null);
         if(res.moveToFirst()) {
-            return res.getInt(0);
+            int noteid = res.getInt(0);
+            res.close();
+            return noteid;
         }
         else {
             res.close();
@@ -135,7 +143,9 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery( "select "+NOTES_COLUMN_TIMESTAMP+" from "+NOTES_TABLE_NAME+" where "+NOTES_COLUMN_ID+"="+id+"", null);
         if(res.moveToFirst()) {
-            return res.getString(0);
+            String timestamp = res.getString(0);
+            res.close();
+            return timestamp;
         }
         else {
             res.close();
