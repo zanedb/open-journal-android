@@ -53,38 +53,7 @@ public class HomeActivity extends AppCompatActivity {
             noNotes.setVisibility(View.VISIBLE);
         } else {
             // Otherwise, display list items
-            // Create new adapter with note titles
-            adapter = new NotesAdapter(this, allNotes);
-            // Set RecyclerView adapter
-            rv.setAdapter(adapter);
-            // Add divider between rows
-            rv.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-            // Add onClickListener
-            rv.addOnItemTouchListener(
-                    new RecyclerItemClickListener(getApplicationContext(), rv, new RecyclerItemClickListener.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(View view, int position) {
-                            // Row click
-                            // Get title of note
-                            String noteTitle = allNotes.get(position);
-                            // Create new intent for opening ExistingNoteActivity
-                            Intent existingNote = new Intent(getApplicationContext(), ExistingNoteActivity.class);
-                            // Pass note title to Activity
-                            existingNote.putExtra("note_title", noteTitle);
-                            // Pass note ID to Activity
-                            existingNote.putExtra("note_id", notesdb.getNoteIdFromTitle(noteTitle));
-                            // Start activity
-                            startActivity(existingNote);
-                        }
-
-                        @Override
-                        public void onLongItemClick(View view, int position) {
-
-                        }
-                    })
-            );
-            // Set RecyclerView to visible
-            rv.setVisibility(View.VISIBLE);
+            setupRecyclerView();
         }
 
         // Initialize FAB from layout for adding onClickListener
@@ -137,6 +106,56 @@ public class HomeActivity extends AppCompatActivity {
         adapter = new NotesAdapter(this, allNotes);
         // Swap existing adapter to new adapter
         rv.swapAdapter(adapter, true);
+
+        // If first note, remove the "add a note" text
+        if(allNotes.size() == 1) {
+            TextView noNotes = (TextView) findViewById(R.id.no_notes_textview);
+            noNotes.setVisibility(View.INVISIBLE);
+
+            // Setup RecyclerView
+            setupRecyclerView();
+        }
+
+        // If all notes are deleted, set noNotes to visible
+        if(allNotes.size() == 0) {
+            TextView noNotes = (TextView) findViewById(R.id.no_notes_textview);
+            noNotes.setVisibility(View.VISIBLE);
+        }
+    }
+
+    void setupRecyclerView() {
+        // Create new adapter with note titles
+        adapter = new NotesAdapter(this, allNotes);
+        // Set RecyclerView adapter
+        rv.setAdapter(adapter);
+        // Add divider between rows
+        rv.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        // Add onClickListener
+        rv.addOnItemTouchListener(
+                new RecyclerItemClickListener(getApplicationContext(), rv, new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        // Row click
+                        // Get title of note
+                        String noteTitle = allNotes.get(position);
+                        // Create new intent for opening ExistingNoteActivity
+                        Intent existingNote = new Intent(getApplicationContext(), ExistingNoteActivity.class);
+                        // Pass note title to Activity
+                        existingNote.putExtra("note_title", noteTitle);
+                        // Pass note ID to Activity
+                        existingNote.putExtra("note_id", notesdb.getNoteIdFromTitle(noteTitle));
+                        // Start activity
+                        startActivity(existingNote);
+                    }
+
+                    @Override
+                    public void onLongItemClick(View view, int position) {
+
+                    }
+                })
+        );
+        // Set RecyclerView to visible
+        rv.setVisibility(View.VISIBLE);
     }
 
     public void searchIcon() {
