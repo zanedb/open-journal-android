@@ -9,6 +9,7 @@ A simple and easy notes platform on Android. Coming soon to other platforms. New
 - [x] A simple notes system
 - [x] Bugfixes and improvements
 - [x] More performance improvements
+- [x] More bugfixes
 - [ ] Advanced features such as searching notes and selecting multiple notes for deletion at once
 - [ ] Even more user-requested features from issues and requests! (submit an issue for a request)
 - [ ] Powerful Encryption
