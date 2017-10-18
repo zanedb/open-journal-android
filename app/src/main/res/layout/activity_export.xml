@@ -19,7 +19,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textAlignment="center"
-        android:text="@string/standardnotes_button" />
+        android:text="@string/standardnotes_button"
+        android:onClick="downloadStandardNotes"/>
 
     <TextView
         android:layout_width="wrap_content"
