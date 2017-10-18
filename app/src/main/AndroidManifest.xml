@@ -15,41 +15,48 @@
             android:theme="@style/AppThemeWelcome">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
             <meta-data
                 android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
         </activity>
         <activity
             android:name=".HomeActivity"
-            android:theme="@style/NoToolbarTheme"/>
+            android:theme="@style/NoToolbarTheme" />
         <activity
             android:name=".AddNoteActivity"
-            android:theme="@style/NoToolbarTheme" >
+            android:theme="@style/NoToolbarTheme">
             <intent-filter>
-                <action android:name="android.intent.action.SEND"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data android:mimeType="text/plain"/>
-                <data android:mimeType="text/*"/>
+                <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="text/plain" />
+                <data android:mimeType="text/*" />
             </intent-filter>
         </activity>
         <activity
             android:name=".ExistingNoteActivity"
-            android:theme="@style/NoToolbarTheme"/>
+            android:theme="@style/NoToolbarTheme" />
+
         <service
             android:name=".utils.QSTileService"
-            android:label="@string/add_note"
             android:icon="@drawable/ic_create_black_24dp"
+            android:label="@string/add_note"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
-                <action
-                    android:name="android.service.quicksettings.action.QS_TILE"/>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
+
             <meta-data
                 android:name="android.service.quicksettings.ACTIVE_TILE"
                 android:value="true" />
         </service>
+
+        <activity android:name=".ExportActivity"></activity>
     </application>
 
 </manifest>

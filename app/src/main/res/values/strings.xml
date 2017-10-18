@@ -49,6 +49,10 @@
     <string name="discard_changes">Discard changes</string>
     <string name="discard_changes_confirm">Are you sure you want to discard your changes to this note?</string>
 
+    <!-- ExportActivity Strings -->
+    <string name="oj_ending">openJournal is shutting down. It\'s been a fun experiment, but I\'ve decided to end it. However, I recommend Standard Notes as a replacement for openJournal.</string>
+    <string name="standardnotes_button">Download Standard Notes</string>
+
     <!-- Error Strings -->
     <string name="general_error">An unexpected error occurred</string>
     <string name="file_not_found_exception">The file could not be found</string>
