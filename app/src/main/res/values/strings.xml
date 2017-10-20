@@ -54,6 +54,8 @@
     <string name="standardnotes_button">Download Standard Notes</string>
     <string name="oj_export">Once you\'ve installed Standard Notes, click the button below to export your notes. Then, you can import them in the settings of Standard Notes.</string>
     <string name="export_button">Export Notes</string>
+    <string name="exporting">Exporting..</string>
+    <string name="export_start_msg">Your data is being exported. This message will be updated when complete. Please leave the app open until complete.</string>
 
     <!-- Error Strings -->
     <string name="general_error">An unexpected error occurred</string>
