@@ -29,7 +29,7 @@
 
     <!-- AddNoteActivity Layout Strings (includes menus) -->
     <string name="note_title_hint">Title</string>
-    <string name="note_hint">Write your note here..</string>
+    <string name="note_hint">There is no text in this note.</string>
     <string name="done_button">Done</string>
 
     <!-- AddNoteActivity Java Strings -->

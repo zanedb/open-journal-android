@@ -21,22 +21,20 @@
             android:background="?attr/colorPrimary">
         </android.support.v7.widget.Toolbar>
 
-        <EditText
-            android:id="@+id/existing_note_title_edittext"
+        <TextView
+            android:id="@+id/existing_note_title_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textShortMessage"
             android:hint="@string/note_title_hint"
             android:padding="16dp"
             android:textSize="24sp"
             android:textStyle="bold"
             android:background="@android:color/transparent"/>
 
-        <EditText
-            android:id="@+id/existing_note_edittext"
+        <TextView
+            android:id="@+id/existing_note_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
             android:hint="@string/note_hint"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"

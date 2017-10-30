@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.openssf.openjournal.utils.DBHelper;
+import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -26,9 +27,9 @@ public class ExistingNoteActivity extends AppCompatActivity {
     int noteId;
     // Define note class
     Note note;
-    // Define EditTexts
-    EditText title;
-    EditText text;
+    // Define TextViews
+    TextView title;
+    TextView text;
     // Define database helper class
     DBHelper notesdb;
 
@@ -41,13 +42,9 @@ public class ExistingNoteActivity extends AppCompatActivity {
         // Initialize database helper class
         notesdb = new DBHelper(this);
 
-        // Initialize EditText's from layout
-        title = (EditText) findViewById(R.id.existing_note_title_edittext);
-        text = (EditText) findViewById(R.id.existing_note_edittext);
-
-        // Set Input types of note + title EditText
-        text.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES | InputType.TYPE_TEXT_FLAG_AUTO_CORRECT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
-        title.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES | InputType.TYPE_TEXT_FLAG_AUTO_CORRECT);
+        // Initialize TextView's from layout
+        title = (TextView) findViewById(R.id.existing_note_title_textview);
+        text = (TextView) findViewById(R.id.existing_note_textview);
 
         // Initialize "Last Modified" TextView from layout
         TextView lm = (TextView) findViewById(R.id.note_last_modified_textview);
