@@ -56,6 +56,8 @@
     <string name="export_button">Export Notes</string>
     <string name="exporting">Exporting..</string>
     <string name="export_start_msg">Your data is being exported. This message will be updated when complete. Please leave the app open until complete.</string>
+    <string name="open_homeactivity_msg">You can also view your old notes by clicking the button below, though you will not be able to edit them.</string>
+    <string name="open_homeactivity_button">View Notes</string>
 
     <!-- Error Strings -->
     <string name="general_error">An unexpected error occurred</string>

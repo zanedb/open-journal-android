@@ -30,4 +30,8 @@ public class ExportActivity extends AppCompatActivity {
         TextView et = (TextView) findViewById(R.id.export_text);
         et.setText(R.string.export_start_msg);
     }
+
+    public void openHomeActivity(View view) {
+        startActivity(new Intent(this, HomeActivity.class));
+    }
 }
