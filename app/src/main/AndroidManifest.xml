@@ -30,20 +30,6 @@
             android:name=".ExistingNoteActivity"
             android:theme="@style/NoToolbarTheme" />
 
-        <service
-            android:name=".utils.QSTileService"
-            android:icon="@drawable/ic_create_black_24dp"
-            android:label="@string/add_note"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
-            <intent-filter>
-                <action android:name="android.service.quicksettings.action.QS_TILE" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.service.quicksettings.ACTIVE_TILE"
-                android:value="true" />
-        </service>
-
         <activity android:name=".ExportActivity"></activity>
     </application>
 
