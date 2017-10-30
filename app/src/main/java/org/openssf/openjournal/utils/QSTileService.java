@@ -5,8 +5,6 @@ import android.os.Build;
 import android.service.quicksettings.TileService;
 import android.support.annotation.RequiresApi;
 
-import org.openssf.openjournal.AddNoteActivity;
-
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class QSTileService extends TileService {
 

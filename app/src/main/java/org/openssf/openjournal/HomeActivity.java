@@ -58,17 +58,6 @@ public class HomeActivity extends AppCompatActivity {
             setupRecyclerView();
         }
 
-        // Initialize FAB from layout for adding onClickListener
-        FloatingActionButton addNote = (FloatingActionButton) findViewById(R.id.add_note_fab);
-        // Add onClickListener
-        addNote.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                // On click, open AddNoteActivity
-                Intent addnoteintent = new Intent(HomeActivity.this, AddNoteActivity.class);
-                startActivity(addnoteintent);
-            }
-        });
-
         // Initialize Toolbar from layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_home_activity);
         // Set as Action Bar

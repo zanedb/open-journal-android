@@ -17,7 +17,7 @@
     <string name="cd_delete">A delete icon to delete the image</string>
 
     <!-- HomeActivity Java Strings -->
-    <string name="no_notes">Add a note to get started..</string>
+    <string name="no_notes">You have no notes.</string>
     <string name="delete_note">Delete note</string>
     <string name="delete_note_confirm">Are you sure you want to PERMANENTLY delete this note?</string>
     <string name="delete">Delete</string>
