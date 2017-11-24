@@ -25,12 +25,6 @@ public class EndOfLifeActivity extends AppCompatActivity {
         }
     }
 
-    public void exportNotes(View view) {
-        Toast.makeText(EndOfLifeActivity.this, getString(R.string.exporting), Toast.LENGTH_SHORT).show();
-        TextView et = (TextView) findViewById(R.id.export_text);
-        et.setText(R.string.export_start_msg);
-    }
-
     public void openHomeActivity(View view) {
         startActivity(new Intent(this, HomeActivity.class));
     }
