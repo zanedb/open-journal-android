@@ -26,7 +26,7 @@
             android:name=".ExistingNoteActivity"
             android:theme="@style/NoToolbarTheme" />
 
-        <activity android:name=".ExportActivity"></activity>
+        <activity android:name=".EndOfLifeActivity"></activity>
     </application>
 
 </manifest>

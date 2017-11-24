@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_margin="32dp"
-    tools:context="org.openssf.openjournal.ExportActivity">
+    tools:context="org.openssf.openjournal.EndOfLifeActivity">
 
     <TextView
         android:layout_width="wrap_content"

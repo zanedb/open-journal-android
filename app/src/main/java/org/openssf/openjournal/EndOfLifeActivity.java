@@ -8,12 +8,12 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ExportActivity extends AppCompatActivity {
+public class EndOfLifeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_export);
+        setContentView(R.layout.activity_endoflife);
     }
 
     public void downloadStandardNotes(View view) {
@@ -26,7 +26,7 @@ public class ExportActivity extends AppCompatActivity {
     }
 
     public void exportNotes(View view) {
-        Toast.makeText(ExportActivity.this, getString(R.string.exporting), Toast.LENGTH_SHORT).show();
+        Toast.makeText(EndOfLifeActivity.this, getString(R.string.exporting), Toast.LENGTH_SHORT).show();
         TextView et = (TextView) findViewById(R.id.export_text);
         et.setText(R.string.export_start_msg);
     }
