@@ -53,7 +53,7 @@
     <string name="oj_ending">openJournal is shutting down. It\'s been a fun experiment, but I\'ve decided to end it. However, I recommend Standard Notes as a replacement for openJournal.</string>
     <string name="standardnotes_button">Download Standard Notes</string>
     <string name="oj_export">Once you\'ve installed Standard Notes, click the button below to export your notes. Then, you can import them in the settings of Standard Notes.</string>
-    <string name="open_homeactivity_msg">You can also view your old notes by clicking the button below, though you will not be able to edit them.</string>
+    <string name="open_homeactivity_msg">You can view your old notes by clicking the button below, though you will not be able to edit them.</string>
     <string name="open_homeactivity_button">View Notes</string>
 
     <!-- Error Strings -->
